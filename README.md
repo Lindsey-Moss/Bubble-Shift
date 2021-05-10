@@ -4,7 +4,7 @@
 ### By: Lindsey "Zee" Moss
 
 
-#### [Website](#) | [GitHub](https://github.com/Lindsey-Moss/) | [LinkedIn](https://www.linkedin.com/in/lindsey-moss-a0571620b/) | 
+#### [Website](#){:target="_blank"} | [GitHub](https://github.com/Lindsey-Moss/){:target="_blank"} | [LinkedIn](https://www.linkedin.com/in/lindsey-moss-a0571620b/){:target="_blank"} | 
 ***
 ### ***Description***
 ##### A "Battleship" redux as a browser game. Instead of "maritime war simulation, for kids!", the intention is "competitive positivity." 
@@ -13,7 +13,7 @@ Bubble Shift is an outlet to combat negative thoughts, feelings, experiences wit
 
 > "Cognitive shifting is the mental process of consciously redirecting one's attention from one fixation to another; the conscious choice to take charge of one's mental habits—and redirect one's focus of attention in helpful, more successful directions."
 > 
-> — [Wikipedia](https://en.wikipedia.org/wiki/Cognitive_shifting), "Cognitive Shifting"
+> — [Wikipedia](https://en.wikipedia.org/wiki/Cognitive_shifting){:target="_blank"}, "Cognitive Shifting"
 
 Some aspects of depression and anxiety occur when someone's experienced, or even perceived, negatives are fixated upon. The idea of Bubble Shift is to illustrate and guide that cognitive shift off of negatives and onto positives in a gentle, colorful, whimsical, "game"-ified way.
 ***
@@ -27,8 +27,8 @@ Some aspects of depression and anxiety occur when someone's experienced, or even
 
 ### ***Getting Started***
 ##### To get started, create a new user and sign in.
-##### A Trello board was used to track the progress of this application and can be viewed [here](https://trello.com/b/eH7vyNCh/bubble-shift-a-battleship-redux).
-##### The project has been deployed and can be viewed [here](#).
+##### A Trello board was used to track the progress of this application and can be viewed [here](https://trello.com/b/eH7vyNCh/bubble-shift-a-battleship-redux){:target="_blank"}.
+##### The project has been deployed and can be viewed [here](#){:target="_blank"}.
 ***
 
 ### ***Screenshots***
@@ -55,4 +55,4 @@ TBA
 
 <!-- Style Inspiration Credit: [Wargames (1983)](https://www.imdb.com/title/tt0086567/)
 
-Fonts: [Google Fonts "VT323" and "Montserrat"](https://fonts.google.com/) -->
+Fonts: [Google Fonts "VT323" and "Montserrat"](https://fonts.google.com/){:target="_blank"} -->
