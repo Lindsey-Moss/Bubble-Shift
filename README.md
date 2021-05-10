@@ -15,7 +15,7 @@ Bubble Shift is an outlet to combat negative thoughts, feelings, experiences wit
 > 
 > — [Wikipedia](https://en.wikipedia.org/wiki/Cognitive_shifting), "Cognitive Shifting"
 
-Some aspects of depression and anxiety occur when someone's experienced, or even perceived, negatives are fixated upon. The idea of Bubble Shift is to illustrate and guide that cognitive shift off of negatives to positives in a gentle, colorful, whimsical, "game"-ified way.
+Some aspects of depression and anxiety occur when someone's experienced, or even perceived, negatives are fixated upon. The idea of Bubble Shift is to illustrate and guide that cognitive shift off of negatives and onto positives in a gentle, colorful, whimsical, "game"-ified way.
 ***
 
 ### ***Technologies***
