@@ -1,6 +1,6 @@
-# Bubble-Shift
+# Bubble Shift
 ## Date: 05/10/2021
-***
+
 ### By: Lindsey "Zee" Moss
 
 
@@ -8,8 +8,14 @@
 ***
 ### ***Description***
 ##### A "Battleship" redux as a browser game. Instead of "maritime war simulation, for kids!", the intention is "competitive positivity." 
+##### *General Assembly SEI Unit 1 project.*
+Bubble Shift is an outlet to combat negative thoughts, feelings, experiences with a friend. The game aims to provide a sense of togetherness/"you're-not-alone"-ness while someone is vulnerable, as well as give guidance for how to rewrite or re-word these negative things into positives, or replace false things with truths and affirmations.
 
-##### (General Assembly SEI Unit 1 project.)
+> "Cognitive shifting is the mental process of consciously redirecting one's attention from one fixation to another; the conscious choice to take charge of one's mental habits—and redirect one's focus of attention in helpful, more successful directions."
+> 
+> — [Wikipedia](https://en.wikipedia.org/wiki/Cognitive_shifting), "Cognitive Shifting"
+
+Some aspects of depression and anxiety occur when someone's experienced, or even perceived, negatives are fixated upon. The idea of Bubble Shift is to illustrate and guide that cognitive shift off of negatives and onto positives in a gentle, colorful, whimsical, "game"-ified way.
 ***
 
 ### ***Technologies***
@@ -21,9 +27,7 @@
 
 ### ***Getting Started***
 ##### To get started, create a new user and sign in.
-
 ##### A Trello board was used to track the progress of this application and can be viewed [here](https://trello.com/b/eH7vyNCh/bubble-shift-a-battleship-redux).
-
 ##### The project has been deployed and can be viewed [here](#).
 ***
 
