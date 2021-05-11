@@ -43,6 +43,7 @@ main {
 
 div {
   border: 2px solid red;
+  background: white;
 }
 
 .playable {

@@ -1,6 +1,7 @@
 console.log('Mic check')
-
-// GLOBAL VARIABLES
+/////////////////////////////////////
+//// GLOBAL VARIABLES
+/////////////////////////////////////
 const body = document.querySelector('body')
 const main = document.querySelector('main')
 const playerBoard = document.querySelector('.playerboard')
@@ -8,7 +9,7 @@ const playerBoard = document.querySelector('.playerboard')
 
 /////////////////////////////////////
 //// BOARD BUILD
-////////////////////////////////////
+/////////////////////////////////////
 const boardCells = [];
 let colCount = 0;
 let pointer = 0;
@@ -28,17 +29,29 @@ for (i = 1; i <= 121; i++) {
     pointer++
   }
 }
-
 console.log(boardCells)
-// FUNCTIONS
+
+/////////////////////////////////////
+//// FUNCTIONS
+/////////////////////////////////////
+
+function hoverCell(e) {
+  e.target.style.color = 'yellow';
+}
+
+function idleCell(e) {
+  e.target.style.color = 'black';
+}
 
 
 
 
 
+/////////////////////////////////////
+//// EVENT LISTENERS
+/////////////////////////////////////
 
-
-
-// EVENT LISTENERS
-
-
+for (i = 0; i < boardCells.length; i++) {
+  boardCells[i].addEventListener('mouseover', hoverCell);
+  boardCells[i].addEventListener('mouseout', idleCell);
+}
