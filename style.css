@@ -2,8 +2,15 @@ body {
   background: aquamarine;
 }
 
+main {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+
 .bubble-list {
-  margin-bottom: 15px;
+  
 }
 
 .bubble {
@@ -29,23 +36,33 @@ body {
 
 /* THE GAME BOARD */
 
-main {
-  display: flex;
-  flex-flow: column wrap;
-  align-items: center;
-}
-
 .playerboard {
   display: grid;
   grid-template-columns: repeat(11,8vmin);
   grid-template-rows: repeat(11,8vmin);
+  margin-bottom: 3vmin;
 }
 
 div {
   border: 2px solid red;
+}
+
+.label {
   background: white;
 }
 
 .playable {
   background: dodgerblue;
+}
+
+.active {
+  color: yellow;
+}
+
+.available {
+  background: green;
+}
+
+.taken {
+  background: gray;
 }
