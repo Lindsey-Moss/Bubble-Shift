@@ -1,0 +1,50 @@
+body {
+  background: aquamarine;
+}
+
+.bubble-list {
+  margin-bottom: 15px;
+}
+
+.bubble {
+  border: 2px solid black;
+  background: yellow;
+}
+
+#five {
+  width: 5em;
+}
+
+#four {
+  width: 4em;
+}
+
+#three {
+  width: 3em;
+}
+
+#two {
+  width: 2em;
+}
+
+/* THE GAME BOARD */
+
+main {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.playerboard {
+  display: grid;
+  grid-template-columns: repeat(11,8vmin);
+  grid-template-rows: repeat(11,8vmin);
+}
+
+div {
+  border: 2px solid red;
+}
+
+.playable {
+  background: dodgerblue;
+}
