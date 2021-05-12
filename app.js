@@ -10,7 +10,7 @@ const boardCells = [];
 const rotate = document.querySelector('.rotate')
 
 
-let bubbleSize = 5;
+let bubbleSize = 0;
 let assume = 'vertical'
 
 /////////////////////////////////////
@@ -31,14 +31,14 @@ for (i = 1; i <= 121; i++) {
   colCount++
   if (i > 11 && colCount >= 2 && colCount <= 11) {
     newCell.classList.add('playable')
-    boardCells.push(newCell)
+    if (i)
+      boardCells.push(newCell)
   }
   if (i % 11 === 0) {
     colCount = 0
     pointer++
   }
 }
-console.log(boardCells)
 
 /////////////////////////////////////
 //// FUNCTIONS
@@ -117,7 +117,7 @@ function hoverCell(e) {
   checkAvailable()
   if (assume === 'horizontal') {
     if (activeCell.classList.contains('available')) {
-      for (i = 1; i < 5; i++) {
+      for (i = 1; i < bubbleSize; i++) {
         activeCell.classList.add('active')
         activeCell.nextSibling.classList.add('active')
         activeCell = activeCell.nextSibling
@@ -132,11 +132,50 @@ function hoverCell(e) {
           return true;
         }
       })
-      for (i = place; i < boardCells.length; i++) {
-        if (boardCells[i].id.includes(`${activeCellID[1]}`) && !boardCells[i].id.includes(10)) {
+      for (i = (place + 1); i < boardCells.length; i++) {
+        if ((boardCells[i].id.includes(`${activeCellID[1]}`)) && !boardCells[i].id.includes(10)) {
           boardCells[i].classList.add('active')
         } else if (activeCellID.includes(10) && boardCells[i].id.includes(10)) {
-          boardCells[i].classList.add('active')
+          boardCells[i].classList.add('active');
+          i++
+          boardCells[10].classList.remove('active');
+          boardCells[20].classList.remove('active');
+          boardCells[30].classList.remove('active');
+          boardCells[40].classList.remove('active');
+          boardCells[50].classList.remove('active');
+          boardCells[60].classList.remove('active');
+          boardCells[70].classList.remove('active');
+          boardCells[80].classList.remove('active');
+          boardCells[90].classList.remove('active');
+        }
+        switch (activeCellID) {
+          case 'A10':
+            boardCells[10].classList.remove('active')
+            break;
+          case 'B10':
+            boardCells[20].classList.remove('active')
+            break;
+          case 'C10':
+            boardCells[30].classList.remove('active')
+            break;
+          case 'D10':
+            boardCells[40].classList.remove('active')
+            break;
+          case 'E10':
+            boardCells[50].classList.remove('active')
+            break;
+          case 'F10':
+            boardCells[60].classList.remove('active')
+            break;
+          case 'G10':
+            boardCells[70].classList.remove('active')
+            break;
+          case 'H10':
+            boardCells[80].classList.remove('active')
+            break;
+          case 'I10':
+            boardCells[90].classList.remove('active')
+            break;
         }
         if (document.getElementsByClassName('active').length === bubbleSize) {
           break;
@@ -160,11 +199,13 @@ function rotateFunc() {
     boardCells.forEach((cell) => {
       cell.classList.remove('available')
     })
+    checkAvailable()
   } else if (assume === 'vertical') {
     assume = 'horizontal'
     boardCells.forEach((cell) => {
       cell.classList.remove('available')
     })
+    checkAvailable()
   }
 }
 
@@ -176,20 +217,17 @@ function rotateFunc() {
 
 for (i = 0; i < bubbleList.length; i++) {
   bubbleList[i].addEventListener('click', function (e) {
-    bubbleSize = e.target.innerText;
-    console.log(bubbleSize)
+    bubbleSize = parseInt(e.target.innerText);
+    boardCells.forEach((cell) => {
+      cell.classList.remove('available')
+    })
+    checkAvailable()
   })
 }
 
 for (i = 0; i < boardCells.length; i++) {
   boardCells[i].addEventListener('mouseover', hoverCell);
   boardCells[i].addEventListener('mouseout', idleCell);
-}
-
-for (i = 0; i < boardCells.length; i++) {
-  boardCells[i].addEventListener('click', function (e) {
-    console.log(e.target.id);
-  });
 }
 
 rotate.addEventListener('click', rotateFunc);
