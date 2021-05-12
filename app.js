@@ -4,6 +4,7 @@ console.log('Mic check')
 /////////////////////////////////////
 const body = document.querySelector('body')
 const main = document.querySelector('main')
+const bubbleCont = document.querySelector('.bubble-list')
 const bubbleList = document.querySelectorAll('.bubble')
 const playerBoard = document.querySelector('.playerboard')
 const boardCells = [];
@@ -12,6 +13,12 @@ const rotate = document.querySelector('.rotate')
 
 let bubbleSize = 0;
 let assume = 'vertical'
+bubbleCont.classList.add('verticalized')
+bubbleList.forEach((bubble) => {
+  bubble.style.height = `${bubble.innerText}em`
+  bubble.style.width = `1em`
+})
+console.log(bubbleList)
 
 /////////////////////////////////////
 //// BOARD BUILD
@@ -196,12 +203,24 @@ function idleCell() {
 function rotateFunc() {
   if (assume === 'horizontal') {
     assume = 'vertical'
+    bubbleCont.classList.remove('horizontalized')
+    bubbleCont.classList.add('verticalized')
+    bubbleList.forEach((bubble) => {
+      bubble.style.height = `${bubble.innerText}em`
+      bubble.style.width = `1em`
+    })
     boardCells.forEach((cell) => {
       cell.classList.remove('available')
     })
     checkAvailable()
   } else if (assume === 'vertical') {
     assume = 'horizontal'
+    bubbleCont.classList.remove('verticalized')
+    bubbleCont.classList.add('horizontalized')
+    bubbleList.forEach((bubble) => {
+      bubble.style.width = `${bubble.innerText}em`
+      bubble.style.height = `1em`
+    })
     boardCells.forEach((cell) => {
       cell.classList.remove('available')
     })

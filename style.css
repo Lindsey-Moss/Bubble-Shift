@@ -3,40 +3,50 @@ body {
 }
 
 main {
-  display: flex;
+  /* display: flex;
   flex-flow: row wrap;
+  justify-content: center;
+  align-items: center; */
+  width: 60vw;
+  min-width: 600px;
+  margin: 0 auto;
+}
+
+.bubble-list {
+  float: left;
+  height: 100vmin;
+  width: 15vmin;
+  min-width: 120px;
   justify-content: center;
   align-items: center;
 }
 
-/* .bubble-list {
-  
-} */
+.verticalized {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.horizontalized {
+  display: block;
+}
 
 .bubble {
   border: 2px solid black;
   background: yellow;
+  padding: 5px;
 }
 
-#five {
-  width: 5em;
+button {
+  width: 100px;
+  height: 30px;
 }
 
-#four {
-  width: 4em;
-}
 
-#three {
-  width: 3em;
-}
-
-#two {
-  width: 2em;
-}
 
 /* THE GAME BOARD */
 
 .playerboard {
+  float: right;
   display: grid;
   grid-template-columns: repeat(11,8vmin);
   grid-template-rows: repeat(11,8vmin);
@@ -59,9 +69,9 @@ div {
   color: yellow;
 }
 
-.available {
+/* .available {
   background: green;
-}
+} */
 
 .taken {
   background: gray;
