@@ -1,4 +1,3 @@
-console.log('Mic check')
 /////////////////////////////////////
 //// GLOBAL VARIABLES
 /////////////////////////////////////
@@ -9,6 +8,7 @@ const bubbleList = document.querySelectorAll('.bubble')
 const playerBoard = document.querySelector('.playerboard')
 const boardCells = [];
 const rotate = document.querySelector('.rotate')
+const jsyk = document.querySelector('#jsyk')
 
 
 let bubbleSize = 0;
@@ -38,8 +38,7 @@ for (i = 1; i <= 121; i++) {
   colCount++
   if (i > 11 && colCount >= 2 && colCount <= 11) {
     newCell.classList.add('playable')
-    if (i)
-      boardCells.push(newCell)
+    boardCells.push(newCell)
   }
   if (i % 11 === 0) {
     colCount = 0
@@ -117,21 +116,33 @@ function checkAvailable() {
         })
     }
   }
+  boardCells.forEach((cell) => {
+    if (cell.classList.contains('taken')) {
+      cell.classList.remove('available')
+    }
+  })
 }
 
 function hoverCell(e) {
   activeCell = e.target;
   checkAvailable()
   if (assume === 'horizontal') {
-    if (activeCell.classList.contains('available')) {
+    if (activeCell.classList.contains('available') && (!activeCell.classList.contains('taken'))) {
       for (i = 1; i < bubbleSize; i++) {
         activeCell.classList.add('active')
         activeCell.nextSibling.classList.add('active')
         activeCell = activeCell.nextSibling
+        if (activeCell.classList.contains('taken')) {
+          activeCell.classList.remove('active')
+          for (i = 1; i < bubbleSize; i++) {
+            activeCell.nextSibling.classList.remove('active')
+            activeCell = activeCell.nextSibling
+          }
+        }
       }
     }
   } else if (assume === 'vertical') {
-    if (activeCell.classList.contains('available')) {
+    if ((activeCell.classList.contains('available')) && (!activeCell.classList.contains('taken'))) {
       activeCell.classList.add('active')
       let activeCellID = e.target.id;
       let place = boardCells.findIndex(function (index) {
@@ -140,7 +151,7 @@ function hoverCell(e) {
         }
       })
       for (i = (place + 1); i < boardCells.length; i++) {
-        if ((boardCells[i].id.includes(`${activeCellID[1]}`)) && !boardCells[i].id.includes(10)) {
+        if ((boardCells[i].id.includes(`${activeCellID[1]}`)) && (!boardCells[i].id.includes(10)) && (!boardCells[i].classList.contains('taken'))) {
           boardCells[i].classList.add('active')
         } else if (activeCellID.includes(10) && boardCells[i].id.includes(10)) {
           boardCells[i].classList.add('active');
@@ -184,6 +195,11 @@ function hoverCell(e) {
             boardCells[90].classList.remove('active')
             break;
         }
+        // let lineUp = []
+        // for (i = 0; i < 10; i++) {
+        //   lineup[i] = 
+        // }
+
         if (document.getElementsByClassName('active').length === bubbleSize) {
           break;
         }
@@ -228,25 +244,37 @@ function rotateFunc() {
   }
 }
 
-
+function setBubble() {
+  let hoveredCells = document.querySelectorAll('.active')
+  if ((hoveredCells.length > 0) && (hoveredCells.length === bubbleSize)) {
+    hoveredCells.forEach((cell) => {
+      cell.classList.remove('available', 'active')
+      cell.classList.add('taken')
+    })
+  }
+}
 
 /////////////////////////////////////
 //// EVENT LISTENERS
 /////////////////////////////////////
 
-for (i = 0; i < bubbleList.length; i++) {
-  bubbleList[i].addEventListener('click', function (e) {
+bubbleList.forEach((bubble) => {
+  bubble.addEventListener('click', function (e) {
     bubbleSize = parseInt(e.target.innerText);
     boardCells.forEach((cell) => {
       cell.classList.remove('available')
     })
     checkAvailable()
   })
-}
+})
 
-for (i = 0; i < boardCells.length; i++) {
-  boardCells[i].addEventListener('mouseover', hoverCell);
-  boardCells[i].addEventListener('mouseout', idleCell);
-}
+boardCells.forEach((cell) => {
+  cell.addEventListener('mouseover', hoverCell);
+  cell.addEventListener('mouseout', idleCell);
+})
+
+boardCells.forEach((cell) => {
+  cell.addEventListener('click', setBubble);
+})
 
 rotate.addEventListener('click', rotateFunc);

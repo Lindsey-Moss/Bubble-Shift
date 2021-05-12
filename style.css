@@ -63,7 +63,7 @@ div {
 }
 
 .active {
-  color: yellow;
+  background-color: yellow;
 }
 
 /* .available {
@@ -72,4 +72,5 @@ div {
 
 .taken {
   background: gray;
+  border-radius: 50%;
 }
