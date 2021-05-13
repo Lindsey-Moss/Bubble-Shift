@@ -206,15 +206,14 @@ function hoverCell(e) {
       console.log(lastCell)
       const checkForBreak = () => {
         if (theShipsLastSquare === lastCell) {
-          // jsyk.innerText = ''
-          // jsyk.style.opacity = '0'
+          jsyk.style.opacity = '0'
         } else {
           for (i = 0; i < boardCells.length; i++) {
             boardCells[i].classList.remove('active');
           }
-          // jsyk.innerText = `You can't overlap bubbles!`
-          // jsyk.style.opacity = '1'
-          // jsyk.style.transition = 'opacity 0.6s'
+          jsyk.innerText = `You can't overlap bubbles!`
+          jsyk.style.opacity = '1'
+          jsyk.style.transition = 'opacity 0.5s'
         }
       }
       checkForBreak()
