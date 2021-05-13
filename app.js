@@ -1,6 +1,7 @@
 /////////////////////////////////////
 //// GLOBAL VARIABLES
 /////////////////////////////////////
+
 const body = document.querySelector('body')
 const main = document.querySelector('main')
 const bubbleCont = document.querySelector('.bubble-list')
@@ -10,20 +11,8 @@ const boardCells = [];
 const rotate = document.querySelector('.rotate')
 const jsyk = document.querySelector('#jsyk')
 let activeCells = document.getElementsByClassName('active')
-const gameStart = document.createElement('button')
-gameStart.setAttribute('id', 'yes')
-gameStart.innerText = 'Yes'
-const redo = document.createElement('button')
-redo.setAttribute('id', 'no')
-redo.innerText = 'No'
-const readyMsg = document.createElement('span')
-readyMsg.innerHTML = `<p>Are you happy with this placement?</p><p>Would you like to begin the game?</p>`
-readyMsg.appendChild(gameStart)
-readyMsg.appendChild(redo)
 
 
-
-console.log(readyMsg)
 
 let bubbleSize = 0;
 let assume = 'vertical'
@@ -39,6 +28,8 @@ let placed3 = false;
 let placed2 = false;
 
 gameActive = false;
+
+
 
 /////////////////////////////////////
 //// BOARD BUILD
@@ -65,6 +56,29 @@ for (i = 1; i <= 121; i++) {
     pointer++
   }
 }
+
+
+//// GAME MESSAGES
+
+const preGame = document.createElement('span')
+preGame.innerText = `Place all your bubbles where you'd like them. :)`
+if (gameActive === false) {
+  jsyk.appendChild(preGame)
+  jsyk.setAttribute('class', 'gentle')
+  jsyk.style.opacity = '1'
+  jsyk.style.transition = 'opacity 0.5s'
+} else {
+  jsyk.removeChild(preGame)
+}
+
+const gameStart = document.createElement('button')
+gameStart.innerText = 'Yes'
+const redo = document.createElement('button')
+redo.innerText = 'No'
+const readyMsg = document.createElement('span')
+readyMsg.innerHTML = `<p>Are you happy with this placement?</p><p>Would you like to begin the game?</p>`
+
+
 
 /////////////////////////////////////
 //// FUNCTIONS
@@ -106,6 +120,9 @@ function checkAvailable() {
         }
         break;
       default:
+        boardCells.forEach((cell) => {
+          cell.classList.remove('available')
+        })
     }
   } else if (assume === 'vertical') {
     switch (bubbleSize) {
@@ -143,65 +160,53 @@ function checkAvailable() {
   switch (bubbleSize) {
     case 5:
       if (placed5 === true) {
-        jsyk.innerText = 'You may only place one of each bubble.'
-        jsyk.style.opacity = '1'
-        jsyk.style.transition = 'opacity 0.5s'
         activeCells.forEach((cell) => {
           cell.classList.remove('active')
         })
-      } else {
-        jsyk.style.opacity = '0'
       }
       break;
     case 4:
       if (placed4 === true) {
-        jsyk.innerText = 'You may only place one of each bubble.'
-        jsyk.style.opacity = '1'
-        jsyk.style.transition = 'opacity 0.5s'
         activeCells.forEach((cell) => {
           cell.classList.remove('active')
         })
-      } else {
-        jsyk.style.opacity = '0'
       }
       break;
     case 3:
       if (placed3 === true) {
-        jsyk.innerText = 'You may only place one of each bubble.'
-        jsyk.style.opacity = '1'
-        jsyk.style.transition = 'opacity 0.5s'
         activeCells.forEach((cell) => {
           cell.classList.remove('active')
         })
-      } else {
-        jsyk.style.opacity = '0'
       }
       break;
     case 2:
       if (placed2 === true) {
-        jsyk.innerText = 'You may only place one of each bubble.'
-        jsyk.style.opacity = '1'
-        jsyk.style.transition = 'opacity 0.5s'
         activeCells.forEach((cell) => {
           cell.classList.remove('active')
         })
-      } else {
-        jsyk.style.opacity = '0'
       }
       break;
     default:
-      jsyk.style.opacity = '0'
   }
 }
 
 function hoverCell(e) {
   let activeCell = e.target;
+  switch (bubbleSize) {
+    case 0:
+      jsyk.style.opacity = '1';
+      break;
+    default:
+      jsyk.style.opacity = '0';
+  }
   checkAvailable()
   if ((!activeCell.classList.contains('available')) && (!activeCell.classList.contains('taken')) && (bubbleSize > 0)) {
+    jsyk.setAttribute('class', 'alert')
     jsyk.innerText = `Bubbles must fit on the board.`
     jsyk.style.opacity = '1'
     jsyk.style.transition = 'opacity 0.5s'
   } else if (activeCell.classList.contains('taken')) {
+    jsyk.setAttribute('class', 'alert')
     jsyk.innerText = `You can't overlap bubbles!`
     jsyk.style.opacity = '1'
     jsyk.style.transition = 'opacity 0.5s'
@@ -217,6 +222,7 @@ function hoverCell(e) {
           for (i = 0; i < boardCells.length; i++) {
             boardCells[i].classList.remove('active');
           }
+          jsyk.setAttribute('class', 'alert')
           jsyk.innerText = `You can't overlap bubbles!`
           jsyk.style.opacity = '1'
           jsyk.style.transition = 'opacity 0.5s'
@@ -293,6 +299,7 @@ function hoverCell(e) {
           for (i = 0; i < boardCells.length; i++) {
             boardCells[i].classList.remove('active');
           }
+          jsyk.setAttribute('class', 'alert')
           jsyk.innerText = `You can't overlap bubbles!`
           jsyk.style.opacity = '1'
           jsyk.style.transition = 'opacity 0.5s'
@@ -363,13 +370,17 @@ function setBubble() {
       cell.classList.remove('available', 'active')
       cell.classList.add('taken')
     })
+  } else if ((hoveredCells.length === 0) && (bubbleSize != 0)) {
+    jsyk.setAttribute('class', 'alert')
+    jsyk.innerText = 'You may only place one of each bubble.'
+    jsyk.style.opacity = '1'
+    jsyk.style.transition = 'opacity 0.5s'
   }
 }
 
 let checkReadyInterval = setInterval(checkReady, 500);
-
 function checkReady() {
-  if ((placed5 === true) && (placed4 === true) && (placed3 === true) && (placed2 === true)) {
+  if ((placed5 === true) && (placed4 === true) && (placed3 === true) && (placed2 === true) && gameActive === false) {
     boardCells.forEach((cell) => {
       cell.removeEventListener('mouseover', hoverCell);
       cell.removeEventListener('mouseout', idleCell);
@@ -385,12 +396,17 @@ function checkReady() {
       })
     })
     jsyk.innerText = ''
+    jsyk.setAttribute('class', 'gentle')
     jsyk.appendChild(readyMsg)
+    readyMsg.appendChild(gameStart)
+    readyMsg.appendChild(redo)
     jsyk.style.opacity = '1'
     jsyk.style.transition = 'opacity 0.5s'
   } else {
   }
 }
+
+
 
 /////////////////////////////////////
 //// EVENT LISTENERS
@@ -399,6 +415,51 @@ function checkReady() {
 bubbleList.forEach((bubble) => {
   bubble.addEventListener('click', function (e) {
     bubbleSize = parseInt(e.target.innerText);
+    switch (bubbleSize) {
+      case 5:
+        if (placed5 === true) {
+          jsyk.setAttribute('class', 'alert')
+          jsyk.innerText = 'You may only place one of each bubble.'
+          jsyk.style.opacity = '1'
+          jsyk.style.transition = 'opacity 0.5s'
+        } else {
+          jsyk.style.opacity = '0';
+        }
+        break;
+      case 4:
+        if (placed4 === true) {
+          jsyk.setAttribute('class', 'alert')
+          jsyk.innerText = 'You may only place one of each bubble.'
+          jsyk.style.opacity = '1'
+          jsyk.style.transition = 'opacity 0.5s'
+        } else {
+          jsyk.style.opacity = '0';
+        }
+        break;
+      case 3:
+        if (placed3 === true) {
+          jsyk.setAttribute('class', 'alert')
+          jsyk.innerText = 'You may only place one of each bubble.'
+          jsyk.style.opacity = '1'
+          jsyk.style.transition = 'opacity 0.5s'
+        } else {
+          jsyk.style.opacity = '0';
+        }
+        break;
+      case 2:
+        if (placed2 === true) {
+          jsyk.setAttribute('class', 'alert')
+          jsyk.innerText = 'You may only place one of each bubble.'
+          jsyk.style.opacity = '1'
+          jsyk.style.transition = 'opacity 0.5s'
+        } else {
+          jsyk.style.opacity = '0';
+        }
+        break;
+      default:
+        jsyk.style.opacity = '0';
+    }
+
     boardCells.forEach((cell) => {
       cell.classList.remove('available')
     })
@@ -416,6 +477,10 @@ rotate.addEventListener('click', rotateFunc);
 
 gameStart.addEventListener('click', () => {
   gameActive = true;
+  bubbleCont.style.display = 'none';
+  jsyk.style.opacity = '0';
+  jsyk.innerText = '';
+  clearInterval(checkReadyInterval)
 })
 
 redo.addEventListener('click', () => {
