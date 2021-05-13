@@ -4,8 +4,10 @@
 
 const body = document.querySelector('body')
 const main = document.querySelector('main')
+const aside = document.querySelector('aside')
 const bubbleCont = document.querySelector('.bubble-list')
 const bubbleList = document.querySelectorAll('.bubble')
+const playingMenu = document.querySelector('.playing')
 const playerBoard = document.querySelector('.playerboard')
 const boardCells = [];
 const rotate = document.querySelector('.rotate')
@@ -83,6 +85,18 @@ readyMsg.innerHTML = `<p>Are you happy with this placement?</p><p>Would you like
 /////////////////////////////////////
 //// FUNCTIONS
 /////////////////////////////////////
+
+function closeSide() {
+  aside.style.width = 0;
+  aside.style.padding = 0;
+  bubbleCont.style.opacity = 0;
+}
+
+function openSide() {
+  aside.style.width = '120px';
+  aside.style.padding = '2vmin';
+  bubbleCont.style.opacity = 1;
+}
 
 function checkAvailable() {
   if (assume === 'horizontal') {
@@ -478,6 +492,7 @@ rotate.addEventListener('click', rotateFunc);
 gameStart.addEventListener('click', () => {
   gameActive = true;
   bubbleCont.style.display = 'none';
+  playingMenu.style.display = 'flex';
   jsyk.style.opacity = '0';
   jsyk.innerText = '';
   clearInterval(checkReadyInterval)
@@ -508,3 +523,4 @@ redo.addEventListener('click', () => {
   placed3 = false;
   placed2 = false;
 })
+

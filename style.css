@@ -11,7 +11,7 @@ body {
   transform: translateX(-15vw);
   border: none;
   position: absolute;
-  padding: 20px;
+  padding: 2vmin;
   color: whitesmoke;
   position: -webkit-sticky;
   position: sticky;
@@ -30,20 +30,50 @@ body {
 }
 
 main {
-  width: 100%;
-  margin: 0 auto;
   display: flex;
   flex-flow: row;
   justify-content: center;
   align-items: center;
 }
 
-.bubble-list {
-  height: 100vmin;
-  min-width: 120px;
-  padding: 10px;
+aside {
+  float: left;
+  z-index: 2;
+  left: 0;
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  width: 120px;
+  padding: 2vmin;
   justify-content: center;
   align-items: center;
+  background: lightpink;
+  transition: 0.5s;
+}
+
+.closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  position: absolute;
+  z-index: 1;
+  top: 5vmin;
+  left: 0;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  background: lightpink;
+  padding: 6px 14px;
+  vertical-align: middle;
+}
+
+.bubble-list {
+  padding-top: 10vmin;
 }
 
 .verticalized {
@@ -61,9 +91,17 @@ main {
   padding: 5px;
 }
 
+.playing {
+  display:none;
+  flex-flow: column wrap;
+}
+
+
+
 button {
   width: 100px;
   height: 30px;
+  margin: 20px;
 }
 
 

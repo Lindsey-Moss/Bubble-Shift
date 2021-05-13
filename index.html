@@ -11,8 +11,8 @@
 
 <body>
   <div id="jsyk"></div>
-  <main>
-
+  <aside>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSide()">&times;</a>
     <section class="bubble-list">
       <div class="bubble" id="five">5</div>
       <div class="bubble" id="four">4</div>
@@ -20,8 +20,13 @@
       <div class="bubble" id="two">2</div>
       <button class="rotate">Rotate</button>
     </section>
-
-
+    <section class="playing">
+      <div class="option">Opponent Map</div>
+      <div class="option">Review Rules</div>
+    </section>
+  </aside>
+  <main>
+    <span class="openbtn" onclick="openSide()">&#9776;</span>
     <section class="playerboard"></section>
 
 
