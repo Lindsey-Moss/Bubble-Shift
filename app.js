@@ -124,7 +124,8 @@ function checkAvailable() {
 }
 
 function hoverCell(e) {
-  activeCell = e.target;
+  let activeCell = e.target;
+  let activeCells = document.getElementsByClassName('active')
   checkAvailable()
   if (assume === 'horizontal') {
     if (activeCell.classList.contains('available') && (!activeCell.classList.contains('taken'))) {
@@ -150,7 +151,7 @@ function hoverCell(e) {
           return true;
         }
       })
-      for (i = (place + 1); i < boardCells.length; i++) {
+      for (i = (place); i < boardCells.length; i++) {
         if ((boardCells[i].id.includes(`${activeCellID[1]}`)) && (!boardCells[i].id.includes(10)) && (!boardCells[i].classList.contains('taken'))) {
           boardCells[i].classList.add('active')
         } else if (activeCellID.includes(10) && boardCells[i].id.includes(10)) {
@@ -195,20 +196,33 @@ function hoverCell(e) {
             boardCells[90].classList.remove('active')
             break;
         }
-        // let lineUp = []
-        // for (i = 0; i < 10; i++) {
-        //   lineup[i] = 
-        // }
-
-        if (document.getElementsByClassName('active').length === bubbleSize) {
+        if (activeCells.length === bubbleSize) {
           break;
         }
       }
+      let letter = activeCellID[0] //=> a
+      let shipBlockOne = letters.indexOf(letter) //=> 0
+      let theShipsLastSquare = letters[shipBlockOne + bubbleSize - 1] //=> e
+      console.log(theShipsLastSquare)
+      let lastCell = activeCells[activeCells.length - 1].id[0]
+      console.log(lastCell)
+      const checkForBreak = () => {
+        if (theShipsLastSquare === lastCell) {
+          // jsyk.innerText = ''
+          // jsyk.style.opacity = '0'
+        } else {
+          for (i = 0; i < boardCells.length; i++) {
+            boardCells[i].classList.remove('active');
+          }
+          // jsyk.innerText = `You can't overlap bubbles!`
+          // jsyk.style.opacity = '1'
+          // jsyk.style.transition = 'opacity 0.6s'
+        }
+      }
+      checkForBreak()
     }
   }
 }
-
-
 
 function idleCell() {
   for (i = 0; i < boardCells.length; i++) {

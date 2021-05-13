@@ -1,6 +1,20 @@
 body {
   background: aquamarine;
+  margin: 0;
 }
+
+/* #jsyk {
+  background-color: red;
+  color: black;
+  opacity: 0;
+  margin-bottom: 15px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  text-align: left;
+  font-family: sans-serif;
+  font-size: 0.9em;
+} */
 
 main {
   display: flex;
@@ -10,9 +24,7 @@ main {
 }
 
 .bubble-list {
-  float: left;
   height: 100vmin;
-  width: 15vmin;
   min-width: 120px;
   justify-content: center;
   align-items: center;
@@ -43,7 +55,6 @@ button {
 /* THE GAME BOARD */
 
 .playerboard {
-  float: right;
   display: grid;
   grid-template-columns: repeat(11,8vmin);
   grid-template-rows: repeat(11,8vmin);
@@ -66,9 +77,9 @@ div {
   background-color: yellow;
 }
 
-/* .available {
-  background: green;
-} */
+.dont {
+  background-color: red;
+}
 
 .taken {
   background: gray;
