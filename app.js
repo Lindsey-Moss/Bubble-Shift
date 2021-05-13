@@ -9,6 +9,7 @@ const playerBoard = document.querySelector('.playerboard')
 const boardCells = [];
 const rotate = document.querySelector('.rotate')
 const jsyk = document.querySelector('#jsyk')
+let activeCells = document.getElementsByClassName('active')
 
 
 let bubbleSize = 0;
@@ -124,11 +125,62 @@ function checkAvailable() {
       cell.classList.remove('available')
     }
   })
+  switch (bubbleSize) {
+    case 5:
+      if (placed5 === true) {
+        jsyk.innerText = 'You may only place one of each bubble.'
+        jsyk.style.opacity = '1'
+        jsyk.style.transition = 'opacity 0.5s'
+        activeCells.forEach((cell) => {
+          cell.classList.remove('active')
+        })
+      } else {
+        jsyk.style.opacity = '0'
+      }
+      break;
+    case 4:
+      if (placed4 === true) {
+        jsyk.innerText = 'You may only place one of each bubble.'
+        jsyk.style.opacity = '1'
+        jsyk.style.transition = 'opacity 0.5s'
+        activeCells.forEach((cell) => {
+          cell.classList.remove('active')
+        })
+      } else {
+        jsyk.style.opacity = '0'
+      }
+      break;
+    case 3:
+      if (placed3 === true) {
+        jsyk.innerText = 'You may only place one of each bubble.'
+        jsyk.style.opacity = '1'
+        jsyk.style.transition = 'opacity 0.5s'
+        activeCells.forEach((cell) => {
+          cell.classList.remove('active')
+        })
+      } else {
+        jsyk.style.opacity = '0'
+      }
+      break;
+    case 2:
+      if (placed2 === true) {
+        jsyk.innerText = 'You may only place one of each bubble.'
+        jsyk.style.opacity = '1'
+        jsyk.style.transition = 'opacity 0.5s'
+        activeCells.forEach((cell) => {
+          cell.classList.remove('active')
+        })
+      } else {
+        jsyk.style.opacity = '0'
+      }
+      break;
+    default:
+      jsyk.style.opacity = '0'
+  }
 }
 
 function hoverCell(e) {
   let activeCell = e.target;
-  let activeCells = document.getElementsByClassName('active')
   checkAvailable()
   if ((!activeCell.classList.contains('available')) && (!activeCell.classList.contains('taken')) && (bubbleSize > 0)) {
     jsyk.innerText = `Bubbles must fit on the board.`
@@ -274,7 +326,7 @@ function setBubble() {
   let hoveredCells = document.querySelectorAll('.active')
   if ((hoveredCells.length > 0) && (hoveredCells.length === bubbleSize)) {
     hoveredCells.forEach((cell) => {
-      switch (hoveredCells) {
+      switch (bubbleSize) {
         case 5:
           placed5 = true;
           break;
@@ -319,3 +371,16 @@ boardCells.forEach((cell) => {
 })
 
 rotate.addEventListener('click', rotateFunc);
+
+if (placed5 === true) {
+  bubbleList[0].removeEventListener('click')
+}
+if (placed4 === true) {
+  bubbleList[1].removeEventListener('click')
+}
+if (placed3 === true) {
+  bubbleList[2].removeEventListener('click')
+}
+if (placed2 === true) {
+  bubbleList[3].removeEventListener('click')
+}
