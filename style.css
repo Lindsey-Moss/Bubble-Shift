@@ -7,7 +7,7 @@ body {
   position: absolute;
   padding: 20px;
   background-color: red;
-  color: black;
+  color: whitesmoke;
   opacity: 0;
   margin-bottom: 15px;
   position: -webkit-sticky;
@@ -58,6 +58,7 @@ button {
 
 .playerboard {
   display: grid;
+  margin-top: -50px;
   grid-template-columns: repeat(11,8vmin);
   grid-template-rows: repeat(11,8vmin);
   margin-bottom: 3vmin;

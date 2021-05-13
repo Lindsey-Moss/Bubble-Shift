@@ -18,7 +18,11 @@ bubbleList.forEach((bubble) => {
   bubble.style.height = `${bubble.innerText}em`
   bubble.style.width = `1em`
 })
-console.log(bubbleList)
+
+let placed5 = false;
+let placed4 = false;
+let placed3 = false;
+let placed2 = false;
 
 /////////////////////////////////////
 //// BOARD BUILD
@@ -86,7 +90,6 @@ function checkAvailable() {
         }
         break;
       default:
-
     }
   } else if (assume === 'vertical') {
     switch (bubbleSize) {
@@ -127,6 +130,17 @@ function hoverCell(e) {
   let activeCell = e.target;
   let activeCells = document.getElementsByClassName('active')
   checkAvailable()
+  if ((!activeCell.classList.contains('available')) && (!activeCell.classList.contains('taken')) && (bubbleSize > 0)) {
+    jsyk.innerText = `Bubbles must fit on the board.`
+    jsyk.style.opacity = '1'
+    jsyk.style.transition = 'opacity 0.5s'
+  } else if (activeCell.classList.contains('taken')) {
+    jsyk.innerText = `You can't overlap bubbles!`
+    jsyk.style.opacity = '1'
+    jsyk.style.transition = 'opacity 0.5s'
+  } else {
+    jsyk.style.opacity = '0'
+  }
   if (assume === 'horizontal') {
     if (activeCell.classList.contains('available') && (!activeCell.classList.contains('taken'))) {
       for (i = 1; i < bubbleSize; i++) {
@@ -136,6 +150,9 @@ function hoverCell(e) {
           for (i = 0; i < boardCells.length; i++) {
             boardCells[i].classList.remove('active');
           }
+          jsyk.innerText = `You can't overlap bubbles!`
+          jsyk.style.opacity = '1'
+          jsyk.style.transition = 'opacity 0.5s'
         }
         activeCell = activeCell.nextSibling
       }
@@ -199,13 +216,11 @@ function hoverCell(e) {
         }
       }
       let letter = activeCellID[0] //=> a
-      let shipBlockOne = letters.indexOf(letter) //=> 0
-      let theShipsLastSquare = letters[shipBlockOne + bubbleSize - 1] //=> e
-      console.log(theShipsLastSquare)
+      let bubCellOne = letters.indexOf(letter) //=> 0
+      let bubLastCell = letters[bubCellOne + bubbleSize - 1] //=> e
       let lastCell = activeCells[activeCells.length - 1].id[0]
-      console.log(lastCell)
       const checkForBreak = () => {
-        if (theShipsLastSquare === lastCell) {
+        if (bubLastCell === lastCell) {
           jsyk.style.opacity = '0'
         } else {
           for (i = 0; i < boardCells.length; i++) {
@@ -259,6 +274,21 @@ function setBubble() {
   let hoveredCells = document.querySelectorAll('.active')
   if ((hoveredCells.length > 0) && (hoveredCells.length === bubbleSize)) {
     hoveredCells.forEach((cell) => {
+      switch (hoveredCells) {
+        case 5:
+          placed5 = true;
+          break;
+        case 4:
+          placed4 = true;
+          break;
+        case 3:
+          placed3 = true;
+          break;
+        case 2:
+          placed2 = true;
+          break;
+        default:
+      }
       cell.classList.remove('available', 'active')
       cell.classList.add('taken')
     })
