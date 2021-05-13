@@ -21,14 +21,15 @@
       <button class="rotate">Rotate</button>
     </section>
     <section class="playing">
-      <div class="option">Opponent Map</div>
-      <div class="option">Review Rules</div>
+      <div class="option" id="opponent">Opponent Map</div>
+      <div class="option" id="mine">My Board</div>
+      <div class="option" id="rules">Review Rules</div>
     </section>
   </aside>
   <main>
     <span class="openbtn" onclick="openSide()">&#9776;</span>
-    <section class="playerboard"></section>
-
+    <section class="playerboard visible"></section>
+    <section class="npcboard invisible"></section>
 
   </main>
 

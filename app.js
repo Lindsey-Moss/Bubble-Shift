@@ -9,12 +9,15 @@ const bubbleCont = document.querySelector('.bubble-list')
 const bubbleList = document.querySelectorAll('.bubble')
 const playingMenu = document.querySelector('.playing')
 const playerBoard = document.querySelector('.playerboard')
+const npcBoard = document.querySelector('.npcboard')
 const boardCells = [];
 const rotate = document.querySelector('.rotate')
 const jsyk = document.querySelector('#jsyk')
 let activeCells = document.getElementsByClassName('active')
-
-
+const oppMap = document.querySelector('#opponent')
+const npcBoardCells = [];
+const myBoard = document.querySelector('#mine')
+const reviewRules = document.querySelector('#rules')
 
 let bubbleSize = 0;
 let assume = 'vertical'
@@ -31,7 +34,10 @@ let placed2 = false;
 
 gameActive = false;
 
+turnIs = 'player';
 
+let playerHits = 0;
+let npcHits = 0;
 
 /////////////////////////////////////
 //// BOARD BUILD
@@ -57,6 +63,58 @@ for (i = 1; i <= 121; i++) {
     colCount = 0
     pointer++
   }
+}
+
+function buildNPC() {
+  colCount = 0;
+  pointer = 0;
+  for (i = 1; i <= 121; i++) {
+    let newCell = document.createElement('div');
+    npcBoard.appendChild(newCell)
+    newCell.innerText = `${letters[pointer]}${colCount}`
+    newCell.setAttribute('id', `${letters[pointer]}${colCount}`)
+    if (colCount === 0 || i < 12) {
+      newCell.classList.add('label')
+    }
+    colCount++
+    if (i > 11 && colCount >= 2 && colCount <= 11) {
+      npcBoardCells.push(newCell)
+    }
+    if (i % 11 === 0) {
+      colCount = 0
+      pointer++
+    }
+  }
+  place = 0
+  for (i = 0; i < 14; i++) {
+    npcBoardCells[place].classList.add('secret')
+    place += 1
+  }
+  // //random placement of npc's bubbles
+  // function setRow() {
+  //   return 1 + Math.floor(Math.random() * 9);
+  // }
+  // function startPoint(max) {
+  //   Math.floor(Math.random() * max)
+  // }
+  // for (i = 0; i < 4; i++) {
+  //   pointer = setRow()
+  //   let npcBubble = 5
+
+  //   let letter = letters[pointer]
+  //   console.log(letter)
+  //   let startingCell = npcBoardCells.findIndex(function (index) {
+  //     if (index.id === `${letter}${startPoint([10 - npcBubble])}`) {
+  //       return true;
+  //     }
+  //   })
+  //   console.log(startingCell)
+  //   // letter + random (max of 10-npcBubble)
+  //   // for (i = 0; i < npcBubble; i++) {
+  //   //   npcBoardCells[startingCell].classList.add('taken')
+  //   // }
+  // }
+  // npcBubble--
 }
 
 
@@ -90,12 +148,14 @@ function closeSide() {
   aside.style.width = 0;
   aside.style.padding = 0;
   bubbleCont.style.opacity = 0;
+  playingMenu.style.opacity = 0;
 }
 
 function openSide() {
   aside.style.width = '120px';
   aside.style.padding = '2vmin';
   bubbleCont.style.opacity = 1;
+  playingMenu.style.opacity = 1;
 }
 
 function checkAvailable() {
@@ -415,12 +475,87 @@ function checkReady() {
     readyMsg.appendChild(gameStart)
     readyMsg.appendChild(redo)
     jsyk.style.opacity = '1'
-    jsyk.style.transition = 'opacity 0.5s'
+    clearInterval(checkReadyInterval)
   } else {
   }
 }
 
+function openOppMap() {
+  if (gameActive === false) {
+    jsyk.innerText = `The game hasn't even started yet!`
+    jsyk.style.opacity = '1'
+    jsyk.setAttribute('class', 'alert')
+  } else if (npcBoard.classList.contains('visible')) {
+    jsyk.innerText = `You're already here! ;)`
+    jsyk.style.opacity = '1'
+    jsyk.setAttribute('class', 'alert')
+  } else {
+    playerBoard.classList.add('invisible')
+    playerBoard.classList.remove('visible')
+    npcBoard.classList.add('visible')
+    npcBoard.classList.remove('invisible')
+  }
+}
 
+function backToMyBoard() {
+  if (playerBoard.classList.contains('visible')) {
+    jsyk.innerText = `You're already here! ;)`
+    jsyk.style.opacity = '1'
+    jsyk.setAttribute('class', 'alert')
+  } else {
+    playerBoard.classList.remove('invisible')
+    playerBoard.classList.add('visible')
+    npcBoard.classList.remove('visible')
+    npcBoard.classList.add('invisible')
+  }
+}
+
+let jsykInterval
+function clearMessage() {
+  jsyk.style.opacity = '0'
+}
+
+function gameHoverCell(e) {
+  if (turnIs === 'player') {
+    activeCell = e.target
+    activeCell.classList.add('active')
+  } else { }
+}
+
+function gameIdleCell() {
+  if (turnIs === 'player') {
+    for (i = 0; i < npcBoardCells.length; i++) {
+      npcBoardCells[i].classList.remove('active');
+    }
+  } else { }
+}
+
+function setGuess() {
+  if (turnIs === 'player') {
+    activeCell = document.querySelector('.active')
+    if (activeCell.classList.contains('secret') && (!activeCell.classList.contains('hit') || !activeCell.classList.contains('miss'))) {
+      activeCell.classList.add('hit')
+      playerHits += 1
+      turnIs = 'npc'
+    } else if (!activeCell.classList.contains('secret') && (!activeCell.classList.contains('hit') || !activeCell.classList.contains('miss'))) {
+      activeCell.classList.add('miss')
+      turnIs = 'npc'
+    }
+  } else { }
+  checkWin()
+}
+
+function checkWin() {
+  if (playerHits === 14) {
+    jsyk.innerText = `Player wins!`
+    jsyk.setAttribute('class', 'gentle')
+    jsyk.style.opacity = '1'
+  } else if (npcHits === 14) {
+    jsyk.innerText = `The computer wins!`
+    jsyk.setAttribute('class', 'gentle')
+    jsyk.style.opacity = '1'
+  }
+}
 
 /////////////////////////////////////
 //// EVENT LISTENERS
@@ -491,11 +626,16 @@ rotate.addEventListener('click', rotateFunc);
 
 gameStart.addEventListener('click', () => {
   gameActive = true;
+  buildNPC()
   bubbleCont.style.display = 'none';
-  playingMenu.style.display = 'flex';
+  jsykInterval = setInterval(clearMessage, 2000);
   jsyk.style.opacity = '0';
   jsyk.innerText = '';
-  clearInterval(checkReadyInterval)
+  npcBoardCells.forEach((cell) => {
+    cell.addEventListener('mouseover', gameHoverCell);
+    cell.addEventListener('mouseout', gameIdleCell);
+    cell.addEventListener('click', setGuess);
+  })
 })
 
 redo.addEventListener('click', () => {
@@ -524,3 +664,6 @@ redo.addEventListener('click', () => {
   placed2 = false;
 })
 
+oppMap.addEventListener('click', openOppMap)
+
+myBoard.addEventListener('click', backToMyBoard)
