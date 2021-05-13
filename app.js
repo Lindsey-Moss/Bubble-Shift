@@ -329,15 +329,19 @@ function setBubble() {
       switch (bubbleSize) {
         case 5:
           placed5 = true;
+          bubbleList[0].classList.add('taken')
           break;
         case 4:
           placed4 = true;
+          bubbleList[1].classList.add('taken')
           break;
         case 3:
           placed3 = true;
+          bubbleList[2].classList.add('taken')
           break;
         case 2:
           placed2 = true;
+          bubbleList[3].classList.add('taken')
           break;
         default:
       }
