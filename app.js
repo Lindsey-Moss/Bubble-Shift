@@ -132,14 +132,12 @@ function hoverCell(e) {
       for (i = 1; i < bubbleSize; i++) {
         activeCell.classList.add('active')
         activeCell.nextSibling.classList.add('active')
-        activeCell = activeCell.nextSibling
-        if (activeCell.classList.contains('taken')) {
-          activeCell.classList.remove('active')
-          for (i = 1; i < bubbleSize; i++) {
-            activeCell.nextSibling.classList.remove('active')
-            activeCell = activeCell.nextSibling
+        if ((activeCell.classList.contains('taken')) || (activeCell.nextSibling.classList.contains('taken'))) {
+          for (i = 0; i < boardCells.length; i++) {
+            boardCells[i].classList.remove('active');
           }
         }
+        activeCell = activeCell.nextSibling
       }
     }
   } else if (assume === 'vertical') {
