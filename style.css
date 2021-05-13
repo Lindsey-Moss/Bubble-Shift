@@ -1,6 +1,8 @@
 body {
   background: aquamarine;
-  margin: 0;
+  margin: 0 auto;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 #jsyk {
@@ -19,8 +21,10 @@ body {
 }
 
 main {
+  width: 70vw;
+  margin: 0 auto;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row;
   justify-content: center;
   align-items: center;
 }
@@ -28,6 +32,7 @@ main {
 .bubble-list {
   height: 100vmin;
   min-width: 120px;
+  padding: 10px;
   justify-content: center;
   align-items: center;
 }
@@ -58,7 +63,8 @@ button {
 
 .playerboard {
   display: grid;
-  margin-top: -50px;
+  padding: 10px;
+  margin-top: -10vmin;
   grid-template-columns: repeat(11,8vmin);
   grid-template-rows: repeat(11,8vmin);
   margin-bottom: 3vmin;

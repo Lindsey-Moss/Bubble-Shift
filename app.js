@@ -10,7 +10,20 @@ const boardCells = [];
 const rotate = document.querySelector('.rotate')
 const jsyk = document.querySelector('#jsyk')
 let activeCells = document.getElementsByClassName('active')
+const gameStart = document.createElement('button')
+gameStart.setAttribute('id', 'yes')
+gameStart.innerText = 'Yes'
+const redo = document.createElement('button')
+redo.setAttribute('id', 'no')
+redo.innerText = 'No'
+const readyMsg = document.createElement('span')
+readyMsg.innerHTML = `<p>Are you happy with this placement?</p><p>Would you like to begin the game?</p>`
+readyMsg.appendChild(gameStart)
+readyMsg.appendChild(redo)
 
+
+
+console.log(readyMsg)
 
 let bubbleSize = 0;
 let assume = 'vertical'
@@ -24,6 +37,8 @@ let placed5 = false;
 let placed4 = false;
 let placed3 = false;
 let placed2 = false;
+
+gameActive = false;
 
 /////////////////////////////////////
 //// BOARD BUILD
@@ -351,6 +366,32 @@ function setBubble() {
   }
 }
 
+let checkReadyInterval = setInterval(checkReady, 500);
+
+function checkReady() {
+  if ((placed5 === true) && (placed4 === true) && (placed3 === true) && (placed2 === true)) {
+    boardCells.forEach((cell) => {
+      cell.removeEventListener('mouseover', hoverCell);
+      cell.removeEventListener('mouseout', idleCell);
+      cell.removeEventListener('click', setBubble);
+    })
+    bubbleList.forEach((bubble) => {
+      bubble.removeEventListener('click', function (e) {
+        bubbleSize = parseInt(e.target.innerText);
+        boardCells.forEach((cell) => {
+          cell.classList.remove('available')
+        })
+        checkAvailable()
+      })
+    })
+    jsyk.innerText = ''
+    jsyk.appendChild(readyMsg)
+    jsyk.style.opacity = '1'
+    jsyk.style.transition = 'opacity 0.5s'
+  } else {
+  }
+}
+
 /////////////////////////////////////
 //// EVENT LISTENERS
 /////////////////////////////////////
@@ -368,23 +409,37 @@ bubbleList.forEach((bubble) => {
 boardCells.forEach((cell) => {
   cell.addEventListener('mouseover', hoverCell);
   cell.addEventListener('mouseout', idleCell);
-})
-
-boardCells.forEach((cell) => {
   cell.addEventListener('click', setBubble);
 })
 
 rotate.addEventListener('click', rotateFunc);
 
-if (placed5 === true) {
-  bubbleList[0].removeEventListener('click')
-}
-if (placed4 === true) {
-  bubbleList[1].removeEventListener('click')
-}
-if (placed3 === true) {
-  bubbleList[2].removeEventListener('click')
-}
-if (placed2 === true) {
-  bubbleList[3].removeEventListener('click')
-}
+gameStart.addEventListener('click', () => {
+  gameActive = true;
+})
+
+redo.addEventListener('click', () => {
+  boardCells.forEach((cell) => {
+    cell.classList.remove('taken')
+    cell.classList.remove('active')
+    cell.addEventListener('mouseover', hoverCell);
+    cell.addEventListener('mouseout', idleCell);
+    cell.addEventListener('click', setBubble);
+  })
+  bubbleList.forEach((bubble) => {
+    bubble.classList.remove('taken')
+    bubble.addEventListener('click', function (e) {
+      bubbleSize = parseInt(e.target.innerText);
+      boardCells.forEach((cell) => {
+        cell.classList.remove('available')
+      })
+      checkAvailable()
+    })
+  })
+  jsyk.innerText = ''
+  jsyk.style.opacity = '0'
+  placed5 = false;
+  placed4 = false;
+  placed3 = false;
+  placed2 = false;
+})
