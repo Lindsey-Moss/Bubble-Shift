@@ -178,7 +178,6 @@ function buildNPC() {
         }
       }
       checkAvailableNPC()
-      console.log(npcPlaceGrid)
       let index = Math.floor(Math.random() * npcPlaceGrid.length);
       let npcSet = npcPlaceGrid[index]
       let placeable = false
