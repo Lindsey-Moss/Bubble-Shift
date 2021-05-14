@@ -102,21 +102,23 @@ function buildNPC() {
     npcPlaceGrid.push(i)
   }
   place = 0
-  for (i = 0; i < 14; i++) {
-    npcBoardCells[place].classList.add('secret')
-    place += 1
-  }
+  // for (i = 0; i < 14; i++) {
+  //   npcBoardCells[place].classList.add('secret')
+  //   place += 1
+  // }
   // //random placement of npc's bubbles
 
   //bubble size
   let npcBub = 5;
+  function setDirection() {
+    direction = Math.floor(Math.random() * 2) //=> 0 is horiz, 1 is vert
+  }
   // iterate through each bubble (4 times, subtracting npcBub each time)
-
   for (i = 1; i <= 4; i++) {
     function placeRandom() {
       let index = Math.floor(Math.random() * npcPlaceGrid.length);
       let npcSet = npcPlaceGrid[index]
-      let direction = Math.floor(Math.random() * 2) //=> 0 is horiz, 1 is vert
+      setDirection()
       let placeable = false
       function checkPlaceable() {
         npcSetCheck = npcSet
@@ -124,7 +126,7 @@ function buildNPC() {
         if (direction === 0) { // horizontal placement check
           switch (npcBub) {
             case 5:
-              for (i = 0; i < 5; i++) {
+              for (h = 0; h < 5; h++) {
                 if (npcBoardCells[npcSetCheck].classList.contains('secret')) {
                   secretsHere += 1
                   npcSetCheck++
@@ -139,7 +141,7 @@ function buildNPC() {
               }
               break;
             case 4:
-              for (i = 0; i < 4; i++) {
+              for (h = 0; h < 4; h++) {
                 if (npcBoardCells[npcSetCheck].classList.contains('secret')) {
                   secretsHere += 1
                   npcSetCheck++
@@ -154,7 +156,7 @@ function buildNPC() {
               }
               break;
             case 3:
-              for (i = 0; i < 3; i++) {
+              for (h = 0; h < 3; h++) {
                 if (npcBoardCells[npcSetCheck].classList.contains('secret')) {
                   secretsHere += 1
                   npcSetCheck++
@@ -169,7 +171,7 @@ function buildNPC() {
               }
               break;
             case 2:
-              for (i = 0; i < 2; i++) {
+              for (h = 0; h < 2; h++) {
                 if (npcBoardCells[npcSetCheck].classList.contains('secret')) {
                   secretsHere += 1
                   npcSetCheck++
@@ -188,7 +190,7 @@ function buildNPC() {
         } else if (direction === 1) { //vertical placement check
           switch (npcBub) {
             case 5:
-              for (i = 0; i < 5; i++) {
+              for (h = 0; h < 5; h++) {
                 if (npcBoardCells[npcSetCheck].classList.contains('secret')) {
                   secretsHere++
                   npcsetcheck += 10
@@ -203,7 +205,7 @@ function buildNPC() {
               }
               break;
             case 4:
-              for (i = 0; i < 4; i++) {
+              for (h = 0; h < 4; h++) {
                 if (npcBoardCells[npcSetCheck].classList.contains('secret')) {
                   secretsHere++
                   npcsetcheck += 10
@@ -218,7 +220,7 @@ function buildNPC() {
               }
               break;
             case 3:
-              for (i = 0; i < 3; i++) {
+              for (h = 0; h < 3; h++) {
                 if (npcBoardCells[npcSetCheck].classList.contains('secret')) {
                   secretsHere++
                   npcsetcheck += 10
@@ -233,7 +235,7 @@ function buildNPC() {
               }
               break;
             case 2:
-              for (i = 0; i < 2; i++) {
+              for (h = 0; h < 2; h++) {
                 if (npcBoardCells[npcSetCheck].classList.contains('secret')) {
                   secretsHere++
                   npcsetcheck += 10
@@ -271,175 +273,196 @@ function buildNPC() {
         placeRandom()
       }
       console.log(npcPlaceGrid)
+      console.log(npcBub)
     }
+    placeRandom()
   }
+}
 
 
 
 
 
+//// GAME MESSAGES
 
-  //// GAME MESSAGES
+const preGame = document.createElement('span')
+preGame.innerText = `Place all your bubbles where you'd like them. :)`
+if (gameActive === false) {
+  jsyk.setAttribute('class', 'gentle')
+  jsyk.appendChild(preGame)
+  jsyk.style.opacity = '1'
+  jsyk.style.transition = 'opacity 0.5s'
+} else { }
 
-  const preGame = document.createElement('span')
-  preGame.innerText = `Place all your bubbles where you'd like them. :)`
-  if (gameActive === false) {
-    jsyk.setAttribute('class', 'gentle')
-    jsyk.appendChild(preGame)
-    jsyk.style.opacity = '1'
-    jsyk.style.transition = 'opacity 0.5s'
-  } else { }
+const gameStart = document.createElement('button')
+gameStart.innerText = 'Yes'
+const redo = document.createElement('button')
+redo.innerText = 'No'
+const readyMsg = document.createElement('span')
+readyMsg.innerHTML = `<p>Are you happy with this placement?</p><p>Would you like to begin the game?</p>`
 
-  const gameStart = document.createElement('button')
-  gameStart.innerText = 'Yes'
-  const redo = document.createElement('button')
-  redo.innerText = 'No'
-  const readyMsg = document.createElement('span')
-  readyMsg.innerHTML = `<p>Are you happy with this placement?</p><p>Would you like to begin the game?</p>`
+const turnMsg = document.createElement('span')
+turnMsg.innerText = `Go ahead! It's your turn. :)`
+const npcTurnMsg = document.createElement('span')
+npcTurnMsg.innerText = `Now it's your opponent's turn...`
 
-  const turnMsg = document.createElement('span')
-  turnMsg.innerText = `Go ahead! It's your turn. :)`
-  const npcTurnMsg = document.createElement('span')
-  npcTurnMsg.innerText = `Now it's your opponent's turn...`
-
-  const hitMsg = document.createElement('span')
-  hitMsg.innerHTML = `<i>Pop!</i> You got one!`
-  const npcHitMsg = document.createElement('span')
-  npcHitMsg.innerHTML = `<i>Pop!</i> They got one!`
-
-
-  const missMsg = document.createElement('span')
-  missMsg.innerHTML = `Ohp, there wasn't anything there, that time...`
-  const npcMissMsg = document.createElement('span')
-  npcMissMsg.innerHTML = `Ohp! They missed this time!`
+const hitMsg = document.createElement('span')
+hitMsg.innerHTML = `<i>Pop!</i> You got one!`
+const npcHitMsg = document.createElement('span')
+npcHitMsg.innerHTML = `<i>Pop!</i> They got one!`
 
 
-  /////////////////////////////////////
-  //// FUNCTIONS
-  /////////////////////////////////////
+const missMsg = document.createElement('span')
+missMsg.innerHTML = `Ohp, there wasn't anything there, that time...`
+const npcMissMsg = document.createElement('span')
+npcMissMsg.innerHTML = `Ohp! They missed this time!`
 
-  function closeSide() {
-    aside.style.width = 0;
-    aside.style.padding = 0;
-    bubbleCont.style.opacity = 0;
-    playingMenu.style.opacity = 0;
-  }
 
-  function openSide() {
-    aside.style.width = '120px';
-    aside.style.padding = '2vmin';
-    bubbleCont.style.opacity = 1;
-    playingMenu.style.opacity = 1;
-  }
+/////////////////////////////////////
+//// FUNCTIONS
+/////////////////////////////////////
 
-  function checkAvailable() {
-    if (assume === 'horizontal') {
-      switch (bubbleSize) {
-        case 5:
-          for (i = 0; i < boardCells.length; i++) {
-            boardCells[i].classList.add('available')
-            if (i === 5 || boardCells[i].id.includes(6, 1)) {
-              i += 4;
-            }
-          }
-          break;
-        case 4:
-          for (i = 0; i < boardCells.length; i++) {
-            boardCells[i].classList.add('available')
-            if (i === 6 || boardCells[i].id.includes(7, 1)) {
-              i += 3;
-            }
-          }
-          break;
-        case 3:
-          for (i = 0; i < boardCells.length; i++) {
-            boardCells[i].classList.add('available')
-            if (i === 7 || boardCells[i].id.includes(8, 1)) {
-              i += 2;
-            }
-          }
-          break;
-        case 2:
-          for (i = 0; i < boardCells.length; i++) {
-            boardCells[i].classList.add('available')
-            if (i === 8 || boardCells[i].id.includes(9, 1)) {
-              i += 1;
-            }
-          }
-          break;
-        default:
-          boardCells.forEach((cell) => {
-            cell.classList.remove('available')
-          })
-      }
-    } else if (assume === 'vertical') {
-      switch (bubbleSize) {
-        case 5:
-          for (i = 0; i < 60; i++) {
-            boardCells[i].classList.add('available')
-          }
-          break;
-        case 4:
-          for (i = 0; i < 70; i++) {
-            boardCells[i].classList.add('available')
-          }
-          break;
-        case 3:
-          for (i = 0; i < 80; i++) {
-            boardCells[i].classList.add('available')
-          }
-          break;
-        case 2:
-          for (i = 0; i < 90; i++) {
-            boardCells[i].classList.add('available')
-          }
-          break;
-        default:
-          boardCells.forEach((cell) => {
-            cell.classList.remove('available')
-          })
-      }
-    }
-    boardCells.forEach((cell) => {
-      if (cell.classList.contains('taken')) {
-        cell.classList.remove('available')
-      }
-    })
+function closeSide() {
+  aside.style.width = 0;
+  aside.style.padding = 0;
+  bubbleCont.style.opacity = 0;
+  playingMenu.style.opacity = 0;
+}
+
+function openSide() {
+  aside.style.width = '120px';
+  aside.style.padding = '2vmin';
+  bubbleCont.style.opacity = 1;
+  playingMenu.style.opacity = 1;
+}
+
+function checkAvailable() {
+  if (assume === 'horizontal') {
     switch (bubbleSize) {
       case 5:
-        if (placed5 === true) {
-          activeCells.forEach((cell) => {
-            cell.classList.remove('active')
-          })
+        for (i = 0; i < boardCells.length; i++) {
+          boardCells[i].classList.add('available')
+          if (i === 5 || boardCells[i].id.includes(6, 1)) {
+            i += 4;
+          }
         }
         break;
       case 4:
-        if (placed4 === true) {
-          activeCells.forEach((cell) => {
-            cell.classList.remove('active')
-          })
+        for (i = 0; i < boardCells.length; i++) {
+          boardCells[i].classList.add('available')
+          if (i === 6 || boardCells[i].id.includes(7, 1)) {
+            i += 3;
+          }
         }
         break;
       case 3:
-        if (placed3 === true) {
-          activeCells.forEach((cell) => {
-            cell.classList.remove('active')
-          })
+        for (i = 0; i < boardCells.length; i++) {
+          boardCells[i].classList.add('available')
+          if (i === 7 || boardCells[i].id.includes(8, 1)) {
+            i += 2;
+          }
         }
         break;
       case 2:
-        if (placed2 === true) {
-          activeCells.forEach((cell) => {
-            cell.classList.remove('active')
-          })
+        for (i = 0; i < boardCells.length; i++) {
+          boardCells[i].classList.add('available')
+          if (i === 8 || boardCells[i].id.includes(9, 1)) {
+            i += 1;
+          }
         }
         break;
       default:
+        boardCells.forEach((cell) => {
+          cell.classList.remove('available')
+        })
+    }
+  } else if (assume === 'vertical') {
+    switch (bubbleSize) {
+      case 5:
+        for (i = 0; i < 60; i++) {
+          boardCells[i].classList.add('available')
+        }
+        break;
+      case 4:
+        for (i = 0; i < 70; i++) {
+          boardCells[i].classList.add('available')
+        }
+        break;
+      case 3:
+        for (i = 0; i < 80; i++) {
+          boardCells[i].classList.add('available')
+        }
+        break;
+      case 2:
+        for (i = 0; i < 90; i++) {
+          boardCells[i].classList.add('available')
+        }
+        break;
+      default:
+        boardCells.forEach((cell) => {
+          cell.classList.remove('available')
+        })
     }
   }
+  boardCells.forEach((cell) => {
+    if (cell.classList.contains('taken')) {
+      cell.classList.remove('available')
+    }
+  })
+  switch (bubbleSize) {
+    case 5:
+      if (placed5 === true) {
+        activeCells.forEach((cell) => {
+          cell.classList.remove('active')
+        })
+      }
+      break;
+    case 4:
+      if (placed4 === true) {
+        activeCells.forEach((cell) => {
+          cell.classList.remove('active')
+        })
+      }
+      break;
+    case 3:
+      if (placed3 === true) {
+        activeCells.forEach((cell) => {
+          cell.classList.remove('active')
+        })
+      }
+      break;
+    case 2:
+      if (placed2 === true) {
+        activeCells.forEach((cell) => {
+          cell.classList.remove('active')
+        })
+      }
+      break;
+    default:
+  }
+}
 
-  function hoverCell(e) {
-    let activeCell = e.target;
+function hoverCell(e) {
+  let activeCell = e.target;
+  switch (bubbleSize) {
+    case 0:
+      jsyk.style.opacity = '1';
+      break;
+    default:
+      jsyk.style.opacity = '0';
+  }
+  checkAvailable()
+  if ((!activeCell.classList.contains('available')) && (!activeCell.classList.contains('taken')) && (bubbleSize > 0)) {
+    jsyk.setAttribute('class', 'alert')
+    jsyk.innerText = `Bubbles must fit on the board.`
+    jsyk.style.opacity = '1'
+    jsyk.style.transition = 'opacity 0.5s'
+  } else if (activeCell.classList.contains('taken')) {
+    jsyk.setAttribute('class', 'alert')
+    jsyk.innerText = `You can't overlap bubbles!`
+    jsyk.style.opacity = '1'
+    jsyk.style.transition = 'opacity 0.5s'
+  } else {
     switch (bubbleSize) {
       case 0:
         jsyk.style.opacity = '1';
@@ -447,474 +470,188 @@ function buildNPC() {
       default:
         jsyk.style.opacity = '0';
     }
-    checkAvailable()
-    if ((!activeCell.classList.contains('available')) && (!activeCell.classList.contains('taken')) && (bubbleSize > 0)) {
-      jsyk.setAttribute('class', 'alert')
-      jsyk.innerText = `Bubbles must fit on the board.`
-      jsyk.style.opacity = '1'
-      jsyk.style.transition = 'opacity 0.5s'
-    } else if (activeCell.classList.contains('taken')) {
-      jsyk.setAttribute('class', 'alert')
-      jsyk.innerText = `You can't overlap bubbles!`
-      jsyk.style.opacity = '1'
-      jsyk.style.transition = 'opacity 0.5s'
-    } else {
-      switch (bubbleSize) {
-        case 0:
-          jsyk.style.opacity = '1';
-          break;
-        default:
-          jsyk.style.opacity = '0';
-      }
-    }
-    if (assume === 'horizontal') {
-      if (activeCell.classList.contains('available') && (!activeCell.classList.contains('taken'))) {
-        for (i = 1; i < bubbleSize; i++) {
-          activeCell.classList.add('active')
-          activeCell.nextSibling.classList.add('active')
-          if ((activeCell.classList.contains('taken')) || (activeCell.nextSibling.classList.contains('taken'))) {
-            for (i = 0; i < boardCells.length; i++) {
-              boardCells[i].classList.remove('active');
-            }
-            jsyk.setAttribute('class', 'alert')
-            jsyk.innerText = `You can't overlap bubbles!`
-            jsyk.style.opacity = '1'
-            jsyk.style.transition = 'opacity 0.5s'
-          }
-          activeCell = activeCell.nextSibling
-        }
-      }
-    } else if (assume === 'vertical') {
-      if ((activeCell.classList.contains('available')) && (!activeCell.classList.contains('taken'))) {
+  }
+  if (assume === 'horizontal') {
+    if (activeCell.classList.contains('available') && (!activeCell.classList.contains('taken'))) {
+      for (i = 1; i < bubbleSize; i++) {
         activeCell.classList.add('active')
-        let activeCellID = e.target.id;
-        let place = boardCells.findIndex(function (index) {
-          if (index.id === `${activeCellID}`) {
-            return true;
+        activeCell.nextSibling.classList.add('active')
+        if ((activeCell.classList.contains('taken')) || (activeCell.nextSibling.classList.contains('taken'))) {
+          for (i = 0; i < boardCells.length; i++) {
+            boardCells[i].classList.remove('active');
           }
-        })
-        for (i = (place); i < boardCells.length; i++) {
-          if ((boardCells[i].id.includes(`${activeCellID[1]}`)) && (!boardCells[i].id.includes(10)) && (!boardCells[i].classList.contains('taken'))) {
-            boardCells[i].classList.add('active')
-          } else if (activeCellID.includes(10) && boardCells[i].id.includes(10)) {
-            boardCells[i].classList.add('active');
-            i++
-            boardCells[10].classList.remove('active');
-            boardCells[20].classList.remove('active');
-            boardCells[30].classList.remove('active');
-            boardCells[40].classList.remove('active');
-            boardCells[50].classList.remove('active');
-            boardCells[60].classList.remove('active');
-            boardCells[70].classList.remove('active');
-            boardCells[80].classList.remove('active');
-            boardCells[90].classList.remove('active');
-          }
-          switch (activeCellID) {
-            case 'A10':
-              boardCells[10].classList.remove('active')
-              break;
-            case 'B10':
-              boardCells[20].classList.remove('active')
-              break;
-            case 'C10':
-              boardCells[30].classList.remove('active')
-              break;
-            case 'D10':
-              boardCells[40].classList.remove('active')
-              break;
-            case 'E10':
-              boardCells[50].classList.remove('active')
-              break;
-            case 'F10':
-              boardCells[60].classList.remove('active')
-              break;
-            case 'G10':
-              boardCells[70].classList.remove('active')
-              break;
-            case 'H10':
-              boardCells[80].classList.remove('active')
-              break;
-            case 'I10':
-              boardCells[90].classList.remove('active')
-              break;
-          }
-          if (activeCells.length === bubbleSize) {
-            break;
-          }
-        }
-        let letter = activeCellID[0] //=> a
-        let bubCellOne = letters.indexOf(letter) //=> 0
-        let bubLastCell = letters[bubCellOne + bubbleSize - 1] //=> e
-        let lastCell = activeCells[activeCells.length - 1].id[0]
-        const checkForBreak = () => {
-          if (bubLastCell === lastCell) {
-            switch (bubbleSize) {
-              case 0:
-                jsyk.style.opacity = '1';
-                break;
-              default:
-                jsyk.style.opacity = '0';
-            }
-          } else {
-            for (i = 0; i < boardCells.length; i++) {
-              boardCells[i].classList.remove('active');
-            }
-            jsyk.setAttribute('class', 'alert')
-            jsyk.innerText = `You can't overlap bubbles!`
-            jsyk.style.opacity = '1'
-            jsyk.style.transition = 'opacity 0.5s'
-          }
-        }
-        checkForBreak()
-      }
-    }
-  }
-
-  function idleCell() {
-    for (i = 0; i < boardCells.length; i++) {
-      boardCells[i].classList.remove('active');
-    }
-  }
-
-  function rotateFunc() {
-    if (assume === 'horizontal') {
-      assume = 'vertical'
-      bubbleCont.classList.remove('horizontalized')
-      bubbleCont.classList.add('verticalized')
-      bubbleList.forEach((bubble) => {
-        bubble.style.height = `${bubble.innerText}em`
-        bubble.style.width = `1em`
-      })
-      boardCells.forEach((cell) => {
-        cell.classList.remove('available')
-      })
-      checkAvailable()
-    } else if (assume === 'vertical') {
-      assume = 'horizontal'
-      bubbleCont.classList.remove('verticalized')
-      bubbleCont.classList.add('horizontalized')
-      bubbleList.forEach((bubble) => {
-        bubble.style.width = `${bubble.innerText}em`
-        bubble.style.height = `1em`
-      })
-      boardCells.forEach((cell) => {
-        cell.classList.remove('available')
-      })
-      checkAvailable()
-    }
-  }
-
-  function setBubble() {
-    let hoveredCells = document.querySelectorAll('.active')
-    if ((hoveredCells.length > 0) && (hoveredCells.length === bubbleSize)) {
-      hoveredCells.forEach((cell) => {
-        switch (bubbleSize) {
-          case 5:
-            placed5 = true;
-            bubbleList[0].classList.add('taken')
-            break;
-          case 4:
-            placed4 = true;
-            bubbleList[1].classList.add('taken')
-            break;
-          case 3:
-            placed3 = true;
-            bubbleList[2].classList.add('taken')
-            break;
-          case 2:
-            placed2 = true;
-            bubbleList[3].classList.add('taken')
-            break;
-          default:
-        }
-        cell.classList.remove('available', 'active')
-        cell.classList.add('taken')
-      })
-    } else if ((hoveredCells.length === 0) && (bubbleSize != 0)) {
-      jsyk.setAttribute('class', 'alert')
-      jsyk.innerText = 'You may only place one of each bubble.'
-      jsyk.style.opacity = '1'
-      jsyk.style.transition = 'opacity 0.5s'
-    }
-  }
-
-  let checkReadyInterval = setInterval(checkReady, 500);
-  function checkReady() {
-    if ((placed5 === true) && (placed4 === true) && (placed3 === true) && (placed2 === true) && gameActive === false) {
-      boardCells.forEach((cell) => {
-        cell.removeEventListener('mouseover', hoverCell);
-        cell.removeEventListener('mouseout', idleCell);
-        cell.removeEventListener('click', setBubble);
-      })
-      bubbleList.forEach((bubble) => {
-        bubble.removeEventListener('click', function (e) {
-          bubbleSize = parseInt(e.target.innerText);
-          boardCells.forEach((cell) => {
-            cell.classList.remove('available')
-          })
-          checkAvailable()
-        })
-      })
-      jsyk.innerText = ''
-      jsyk.setAttribute('class', 'gentle')
-      jsyk.appendChild(readyMsg)
-      readyMsg.appendChild(gameStart)
-      readyMsg.appendChild(redo)
-      jsyk.style.opacity = '1'
-      clearInterval(checkReadyInterval)
-    } else {
-    }
-  }
-
-  function openOppMap() {
-    if (gameActive === false) {
-      if (!jsyk.id.includes('endscreen')) {
-        jsyk.style.opacity = 0
-        setTimeout(function () {
-          jsyk.innerHTML = ''
-          jsyk.innerText = `The game hasn't even started yet!`
+          jsyk.setAttribute('class', 'alert')
+          jsyk.innerText = `You can't overlap bubbles!`
           jsyk.style.opacity = '1'
           jsyk.style.transition = 'opacity 0.5s'
-          jsyk.setAttribute('class', 'alert')
-        }, 300)
-        setTimeout(function () {
-          jsyk.style.opacity = 0
-        }, 1500)
-        setTimeout(function () {
-          jsyk.innerHTML = ''
-          jsyk.appendChild(preGame)
-          jsyk.setAttribute('class', 'gentle')
-          jsyk.style.opacity = 1
-        }, 1900)
-      } else if (jsyk.id.includes('endscreen')) {
+        }
+        activeCell = activeCell.nextSibling
       }
-    } else if (npcBoard.classList.contains('visible')) {
-
-    } else {
-      jsyk.innerHTML = ''
-      playerBoard.classList.add('invisible')
-      playerBoard.classList.remove('visible')
-      myBoard.classList.remove('clicked')
-      oppMap.classList.add('clicked')
-      npcBoard.classList.add('visible')
-      npcBoard.classList.remove('invisible')
-      jsyk.style.opacity = '0'
     }
-  }
-
-  function backToMyBoard() {
-    if (playerBoard.classList.contains('visible')) {
-
-    } else {
-      playerBoard.classList.remove('invisible')
-      playerBoard.classList.add('visible')
-      myBoard.classList.add('clicked')
-      npcBoard.classList.remove('visible')
-      npcBoard.classList.add('invisible')
-      oppMap.classList.remove('clicked')
-    }
-  }
-
-  function gameHoverCell(e) {
-    if (turnIs === 'player') {
-      activeCell = e.target
+  } else if (assume === 'vertical') {
+    if ((activeCell.classList.contains('available')) && (!activeCell.classList.contains('taken'))) {
       activeCell.classList.add('active')
-    } else { }
-  }
-
-  function gameIdleCell() {
-    if (turnIs === 'player') {
-      for (i = 0; i < npcBoardCells.length; i++) {
-        npcBoardCells[i].classList.remove('active');
-      }
-    } else { }
-  }
-
-  function setGuess() {
-    if (turnIs === 'player') {
-      activeCell = document.querySelector('.active')
-      if (activeCell.classList.contains('secret') && !activeCell.classList.contains('hit')) {
-        activeCell.classList.add('hit')
-        playerHits++
-        checkWin()
-      } else if (!activeCell.classList.contains('secret') && !activeCell.classList.contains('miss')) {
-        activeCell.classList.add('miss')
-        jsyk.innerHTML = ''
-        jsyk.style.opacity = '1'
-        jsyk.appendChild(missMsg)
-        setTimeout(switchTurn, 2000);
-      }
-    } else { }
-
-  }
-
-  function checkWin() {
-    if (playerHits === 14) {
-      jsyk.innerHTML = ''
-      jsyk.style.opacity = '1'
-      jsyk.setAttribute('id', 'endscreen')
-      jsyk.innerHTML = `You won! Congratulations! :D`
-      npcBoardCells.forEach((cell) => {
-        cell.removeEventListener('mouseover', gameHoverCell);
-        cell.removeEventListener('mouseout', gameIdleCell);
-        cell.removeEventListener('click', setGuess);
+      let activeCellID = e.target.id;
+      let place = boardCells.findIndex(function (index) {
+        if (index.id === `${activeCellID}`) {
+          return true;
+        }
       })
-    } else if (npcHits === 14) {
-      jsyk.innerHTML = ''
-      jsyk.style.opacity = '1'
-      jsyk.setAttribute('id', 'endscreen')
-      jsyk.innerHTML = `The computer wins! Now wasn't that fun? :)`
-      npcBoardCells.forEach((cell) => {
-        cell.removeEventListener('mouseover', gameHoverCell);
-        cell.removeEventListener('mouseout', gameIdleCell);
-        cell.removeEventListener('click', setGuess);
-      })
-    } else {
-      jsyk.innerHTML = ''
-      jsyk.style.opacity = '1'
-      if (turnIs === 'player') {
-        jsyk.appendChild(hitMsg)
-      } else if (turnIs === 'npc') {
-        jsyk.appendChild(npcHitMsg)
+      for (i = (place); i < boardCells.length; i++) {
+        if ((boardCells[i].id.includes(`${activeCellID[1]}`)) && (!boardCells[i].id.includes(10)) && (!boardCells[i].classList.contains('taken'))) {
+          boardCells[i].classList.add('active')
+        } else if (activeCellID.includes(10) && boardCells[i].id.includes(10)) {
+          boardCells[i].classList.add('active');
+          i++
+          boardCells[10].classList.remove('active');
+          boardCells[20].classList.remove('active');
+          boardCells[30].classList.remove('active');
+          boardCells[40].classList.remove('active');
+          boardCells[50].classList.remove('active');
+          boardCells[60].classList.remove('active');
+          boardCells[70].classList.remove('active');
+          boardCells[80].classList.remove('active');
+          boardCells[90].classList.remove('active');
+        }
+        switch (activeCellID) {
+          case 'A10':
+            boardCells[10].classList.remove('active')
+            break;
+          case 'B10':
+            boardCells[20].classList.remove('active')
+            break;
+          case 'C10':
+            boardCells[30].classList.remove('active')
+            break;
+          case 'D10':
+            boardCells[40].classList.remove('active')
+            break;
+          case 'E10':
+            boardCells[50].classList.remove('active')
+            break;
+          case 'F10':
+            boardCells[60].classList.remove('active')
+            break;
+          case 'G10':
+            boardCells[70].classList.remove('active')
+            break;
+          case 'H10':
+            boardCells[80].classList.remove('active')
+            break;
+          case 'I10':
+            boardCells[90].classList.remove('active')
+            break;
+        }
+        if (activeCells.length === bubbleSize) {
+          break;
+        }
       }
-      setTimeout(switchTurn, 2000);
+      let letter = activeCellID[0] //=> a
+      let bubCellOne = letters.indexOf(letter) //=> 0
+      let bubLastCell = letters[bubCellOne + bubbleSize - 1] //=> e
+      let lastCell = activeCells[activeCells.length - 1].id[0]
+      const checkForBreak = () => {
+        if (bubLastCell === lastCell) {
+          switch (bubbleSize) {
+            case 0:
+              jsyk.style.opacity = '1';
+              break;
+            default:
+              jsyk.style.opacity = '0';
+          }
+        } else {
+          for (i = 0; i < boardCells.length; i++) {
+            boardCells[i].classList.remove('active');
+          }
+          jsyk.setAttribute('class', 'alert')
+          jsyk.innerText = `You can't overlap bubbles!`
+          jsyk.style.opacity = '1'
+          jsyk.style.transition = 'opacity 0.5s'
+        }
+      }
+      checkForBreak()
     }
   }
+}
 
-  function npcTurn() {
-    let index = Math.floor(Math.random() * npcChoices.length);
-    let npcGuess = npcChoices[index]
-    npcChoices.splice(index, 1);
-    if (!boardCells[npcGuess].classList.contains('taken')) {
-      boardCells[npcGuess].classList.add('miss')
-      jsyk.innerHTML = ''
-      jsyk.appendChild(npcMissMsg)
-      setTimeout(switchTurn, 2500)
-    } else if (boardCells[npcGuess].classList.contains('taken')) {
-      boardCells[npcGuess].classList.add('hit')
-      npcHits++
-      checkWin()
-    }
+function idleCell() {
+  for (i = 0; i < boardCells.length; i++) {
+    boardCells[i].classList.remove('active');
   }
+}
 
-  function switchTurn() {
-    if (turnIs === 'player') {
-      turnIs = 'npc'
-      jsyk.innerHTML = ''
-      jsyk.style.opacity = '1'
-      jsyk.setAttribute('class', 'alert')
-      jsyk.appendChild(npcTurnMsg)
-      backToMyBoard()
-      setTimeout(npcTurn, 2500)
-    } else if (turnIs === 'npc') {
-      turnIs = 'player'
-      jsyk.innerHTML = ''
-      jsyk.setAttribute('class', 'gentle')
-      jsyk.style.opacity = '1'
-      jsyk.appendChild(turnMsg)
-      setTimeout(function () {
-        openOppMap()
-      }, 2000)
-    }
+function rotateFunc() {
+  if (assume === 'horizontal') {
+    assume = 'vertical'
+    bubbleCont.classList.remove('horizontalized')
+    bubbleCont.classList.add('verticalized')
+    bubbleList.forEach((bubble) => {
+      bubble.style.height = `${bubble.innerText}em`
+      bubble.style.width = `1em`
+    })
+    boardCells.forEach((cell) => {
+      cell.classList.remove('available')
+    })
+    checkAvailable()
+  } else if (assume === 'vertical') {
+    assume = 'horizontal'
+    bubbleCont.classList.remove('verticalized')
+    bubbleCont.classList.add('horizontalized')
+    bubbleList.forEach((bubble) => {
+      bubble.style.width = `${bubble.innerText}em`
+      bubble.style.height = `1em`
+    })
+    boardCells.forEach((cell) => {
+      cell.classList.remove('available')
+    })
+    checkAvailable()
   }
+}
 
-  /////////////////////////////////////
-  //// EVENT LISTENERS
-  /////////////////////////////////////
-
-  bubbleList.forEach((bubble) => {
-    bubble.addEventListener('click', function (e) {
-      bubbleSize = parseInt(e.target.innerText);
+function setBubble() {
+  let hoveredCells = document.querySelectorAll('.active')
+  if ((hoveredCells.length > 0) && (hoveredCells.length === bubbleSize)) {
+    hoveredCells.forEach((cell) => {
       switch (bubbleSize) {
         case 5:
-          if (placed5 === true) {
-            jsyk.setAttribute('class', 'alert')
-            jsyk.innerText = 'You may only place one of each bubble.'
-            jsyk.style.opacity = '1'
-            jsyk.style.transition = 'opacity 0.5s'
-          } else {
-            jsyk.style.opacity = '0';
-          }
+          placed5 = true;
+          bubbleList[0].classList.add('taken')
           break;
         case 4:
-          if (placed4 === true) {
-            jsyk.setAttribute('class', 'alert')
-            jsyk.innerText = 'You may only place one of each bubble.'
-            jsyk.style.opacity = '1'
-            jsyk.style.transition = 'opacity 0.5s'
-          } else {
-            jsyk.style.opacity = '0';
-          }
+          placed4 = true;
+          bubbleList[1].classList.add('taken')
           break;
         case 3:
-          if (placed3 === true) {
-            jsyk.setAttribute('class', 'alert')
-            jsyk.innerText = 'You may only place one of each bubble.'
-            jsyk.style.opacity = '1'
-            jsyk.style.transition = 'opacity 0.5s'
-          } else {
-            jsyk.style.opacity = '0';
-          }
+          placed3 = true;
+          bubbleList[2].classList.add('taken')
           break;
         case 2:
-          if (placed2 === true) {
-            jsyk.setAttribute('class', 'alert')
-            jsyk.innerText = 'You may only place one of each bubble.'
-            jsyk.style.opacity = '1'
-            jsyk.style.transition = 'opacity 0.5s'
-          } else {
-            jsyk.style.opacity = '0';
-          }
+          placed2 = true;
+          bubbleList[3].classList.add('taken')
           break;
         default:
-          jsyk.style.opacity = '0';
       }
-
-      boardCells.forEach((cell) => {
-        cell.classList.remove('available')
-      })
-      checkAvailable()
+      cell.classList.remove('available', 'active')
+      cell.classList.add('taken')
     })
-  })
-
-  boardCells.forEach((cell) => {
-    cell.addEventListener('mouseover', hoverCell);
-    cell.addEventListener('mouseout', idleCell);
-    cell.addEventListener('click', setBubble);
-  })
-
-  rotate.addEventListener('click', rotateFunc);
-
-  gameStart.addEventListener('click', () => {
-    gameActive = true;
-    buildNPC()
-    bubbleCont.style.display = 'none';
-    jsyk.style.opacity = '0';
-    jsyk.removeChild(readyMsg)
+  } else if ((hoveredCells.length === 0) && (bubbleSize != 0)) {
+    jsyk.setAttribute('class', 'alert')
+    jsyk.innerText = 'You may only place one of each bubble.'
     jsyk.style.opacity = '1'
-    jsyk.appendChild(turnMsg)
-    boardCells.forEach((cell) => {
-      cell.style.cursor = 'not-allowed';
-    })
-    npcBoardCells.forEach((cell) => {
-      cell.addEventListener('mouseover', gameHoverCell);
-      cell.addEventListener('mouseout', gameIdleCell);
-      cell.addEventListener('click', setGuess);
-    })
+    jsyk.style.transition = 'opacity 0.5s'
+  }
+}
 
-  })
-
-  redo.addEventListener('click', () => {
+let checkReadyInterval = setInterval(checkReady, 500);
+function checkReady() {
+  if ((placed5 === true) && (placed4 === true) && (placed3 === true) && (placed2 === true) && gameActive === false) {
     boardCells.forEach((cell) => {
-      cell.classList.remove('taken')
-      cell.classList.remove('active')
-      cell.addEventListener('mouseover', hoverCell);
-      cell.addEventListener('mouseout', idleCell);
-      cell.addEventListener('click', setBubble);
+      cell.removeEventListener('mouseover', hoverCell);
+      cell.removeEventListener('mouseout', idleCell);
+      cell.removeEventListener('click', setBubble);
     })
     bubbleList.forEach((bubble) => {
-      bubble.classList.remove('taken')
-      bubble.addEventListener('click', function (e) {
+      bubble.removeEventListener('click', function (e) {
         bubbleSize = parseInt(e.target.innerText);
         boardCells.forEach((cell) => {
           cell.classList.remove('available')
@@ -922,14 +659,281 @@ function buildNPC() {
         checkAvailable()
       })
     })
-    jsyk.removeChild(readyMsg)
+    jsyk.innerText = ''
+    jsyk.setAttribute('class', 'gentle')
+    jsyk.appendChild(readyMsg)
+    readyMsg.appendChild(gameStart)
+    readyMsg.appendChild(redo)
+    jsyk.style.opacity = '1'
+    clearInterval(checkReadyInterval)
+  } else {
+  }
+}
+
+function openOppMap() {
+  if (gameActive === false) {
+    if (!jsyk.id.includes('endscreen')) {
+      jsyk.style.opacity = 0
+      setTimeout(function () {
+        jsyk.innerHTML = ''
+        jsyk.innerText = `The game hasn't even started yet!`
+        jsyk.style.opacity = '1'
+        jsyk.style.transition = 'opacity 0.5s'
+        jsyk.setAttribute('class', 'alert')
+      }, 300)
+      setTimeout(function () {
+        jsyk.style.opacity = 0
+      }, 1500)
+      setTimeout(function () {
+        jsyk.innerHTML = ''
+        jsyk.appendChild(preGame)
+        jsyk.setAttribute('class', 'gentle')
+        jsyk.style.opacity = 1
+      }, 1900)
+    } else if (jsyk.id.includes('endscreen')) {
+    }
+  } else if (npcBoard.classList.contains('visible')) {
+
+  } else {
+    jsyk.innerHTML = ''
+    playerBoard.classList.add('invisible')
+    playerBoard.classList.remove('visible')
+    myBoard.classList.remove('clicked')
+    oppMap.classList.add('clicked')
+    npcBoard.classList.add('visible')
+    npcBoard.classList.remove('invisible')
     jsyk.style.opacity = '0'
-    placed5 = false;
-    placed4 = false;
-    placed3 = false;
-    placed2 = false;
+  }
+}
+
+function backToMyBoard() {
+  if (playerBoard.classList.contains('visible')) {
+
+  } else {
+    playerBoard.classList.remove('invisible')
+    playerBoard.classList.add('visible')
+    myBoard.classList.add('clicked')
+    npcBoard.classList.remove('visible')
+    npcBoard.classList.add('invisible')
+    oppMap.classList.remove('clicked')
+  }
+}
+
+function gameHoverCell(e) {
+  if (turnIs === 'player') {
+    activeCell = e.target
+    activeCell.classList.add('active')
+  } else { }
+}
+
+function gameIdleCell() {
+  if (turnIs === 'player') {
+    for (i = 0; i < npcBoardCells.length; i++) {
+      npcBoardCells[i].classList.remove('active');
+    }
+  } else { }
+}
+
+function setGuess() {
+  if (turnIs === 'player') {
+    activeCell = document.querySelector('.active')
+    if (activeCell.classList.contains('secret') && !activeCell.classList.contains('hit')) {
+      activeCell.classList.add('hit')
+      playerHits++
+      checkWin()
+    } else if (!activeCell.classList.contains('secret') && !activeCell.classList.contains('miss')) {
+      activeCell.classList.add('miss')
+      jsyk.innerHTML = ''
+      jsyk.style.opacity = '1'
+      jsyk.appendChild(missMsg)
+      setTimeout(switchTurn, 2000);
+    }
+  } else { }
+
+}
+
+function checkWin() {
+  if (playerHits === 14) {
+    jsyk.innerHTML = ''
+    jsyk.style.opacity = '1'
+    jsyk.setAttribute('id', 'endscreen')
+    jsyk.innerHTML = `You won! Congratulations! :D`
+    npcBoardCells.forEach((cell) => {
+      cell.removeEventListener('mouseover', gameHoverCell);
+      cell.removeEventListener('mouseout', gameIdleCell);
+      cell.removeEventListener('click', setGuess);
+    })
+  } else if (npcHits === 14) {
+    jsyk.innerHTML = ''
+    jsyk.style.opacity = '1'
+    jsyk.setAttribute('id', 'endscreen')
+    jsyk.innerHTML = `The computer wins! Now wasn't that fun? :)`
+    npcBoardCells.forEach((cell) => {
+      cell.removeEventListener('mouseover', gameHoverCell);
+      cell.removeEventListener('mouseout', gameIdleCell);
+      cell.removeEventListener('click', setGuess);
+    })
+  } else {
+    jsyk.innerHTML = ''
+    jsyk.style.opacity = '1'
+    if (turnIs === 'player') {
+      jsyk.appendChild(hitMsg)
+    } else if (turnIs === 'npc') {
+      jsyk.appendChild(npcHitMsg)
+    }
+    setTimeout(switchTurn, 2000);
+  }
+}
+
+function npcTurn() {
+  let index = Math.floor(Math.random() * npcChoices.length);
+  let npcGuess = npcChoices[index]
+  npcChoices.splice(index, 1);
+  if (!boardCells[npcGuess].classList.contains('taken')) {
+    boardCells[npcGuess].classList.add('miss')
+    jsyk.innerHTML = ''
+    jsyk.appendChild(npcMissMsg)
+    setTimeout(switchTurn, 2500)
+  } else if (boardCells[npcGuess].classList.contains('taken')) {
+    boardCells[npcGuess].classList.add('hit')
+    npcHits++
+    checkWin()
+  }
+}
+
+function switchTurn() {
+  if (turnIs === 'player') {
+    turnIs = 'npc'
+    jsyk.innerHTML = ''
+    jsyk.style.opacity = '1'
+    jsyk.setAttribute('class', 'alert')
+    jsyk.appendChild(npcTurnMsg)
+    backToMyBoard()
+    setTimeout(npcTurn, 2500)
+  } else if (turnIs === 'npc') {
+    turnIs = 'player'
+    jsyk.innerHTML = ''
+    jsyk.setAttribute('class', 'gentle')
+    jsyk.style.opacity = '1'
+    jsyk.appendChild(turnMsg)
+    setTimeout(function () {
+      openOppMap()
+    }, 2000)
+  }
+}
+
+/////////////////////////////////////
+//// EVENT LISTENERS
+/////////////////////////////////////
+
+bubbleList.forEach((bubble) => {
+  bubble.addEventListener('click', function (e) {
+    bubbleSize = parseInt(e.target.innerText);
+    switch (bubbleSize) {
+      case 5:
+        if (placed5 === true) {
+          jsyk.setAttribute('class', 'alert')
+          jsyk.innerText = 'You may only place one of each bubble.'
+          jsyk.style.opacity = '1'
+          jsyk.style.transition = 'opacity 0.5s'
+        } else {
+          jsyk.style.opacity = '0';
+        }
+        break;
+      case 4:
+        if (placed4 === true) {
+          jsyk.setAttribute('class', 'alert')
+          jsyk.innerText = 'You may only place one of each bubble.'
+          jsyk.style.opacity = '1'
+          jsyk.style.transition = 'opacity 0.5s'
+        } else {
+          jsyk.style.opacity = '0';
+        }
+        break;
+      case 3:
+        if (placed3 === true) {
+          jsyk.setAttribute('class', 'alert')
+          jsyk.innerText = 'You may only place one of each bubble.'
+          jsyk.style.opacity = '1'
+          jsyk.style.transition = 'opacity 0.5s'
+        } else {
+          jsyk.style.opacity = '0';
+        }
+        break;
+      case 2:
+        if (placed2 === true) {
+          jsyk.setAttribute('class', 'alert')
+          jsyk.innerText = 'You may only place one of each bubble.'
+          jsyk.style.opacity = '1'
+          jsyk.style.transition = 'opacity 0.5s'
+        } else {
+          jsyk.style.opacity = '0';
+        }
+        break;
+      default:
+        jsyk.style.opacity = '0';
+    }
+
+    boardCells.forEach((cell) => {
+      cell.classList.remove('available')
+    })
+    checkAvailable()
+  })
+})
+
+boardCells.forEach((cell) => {
+  cell.addEventListener('mouseover', hoverCell);
+  cell.addEventListener('mouseout', idleCell);
+  cell.addEventListener('click', setBubble);
+})
+
+rotate.addEventListener('click', rotateFunc);
+
+gameStart.addEventListener('click', () => {
+  gameActive = true;
+  buildNPC()
+  bubbleCont.style.display = 'none';
+  jsyk.style.opacity = '0';
+  jsyk.removeChild(readyMsg)
+  jsyk.style.opacity = '1'
+  jsyk.appendChild(turnMsg)
+  boardCells.forEach((cell) => {
+    cell.style.cursor = 'not-allowed';
+  })
+  npcBoardCells.forEach((cell) => {
+    cell.addEventListener('mouseover', gameHoverCell);
+    cell.addEventListener('mouseout', gameIdleCell);
+    cell.addEventListener('click', setGuess);
   })
 
-  oppMap.addEventListener('click', openOppMap)
+})
 
-  myBoard.addEventListener('click', backToMyBoard)
+redo.addEventListener('click', () => {
+  boardCells.forEach((cell) => {
+    cell.classList.remove('taken')
+    cell.classList.remove('active')
+    cell.addEventListener('mouseover', hoverCell);
+    cell.addEventListener('mouseout', idleCell);
+    cell.addEventListener('click', setBubble);
+  })
+  bubbleList.forEach((bubble) => {
+    bubble.classList.remove('taken')
+    bubble.addEventListener('click', function (e) {
+      bubbleSize = parseInt(e.target.innerText);
+      boardCells.forEach((cell) => {
+        cell.classList.remove('available')
+      })
+      checkAvailable()
+    })
+  })
+  jsyk.removeChild(readyMsg)
+  jsyk.style.opacity = '0'
+  placed5 = false;
+  placed4 = false;
+  placed3 = false;
+  placed2 = false;
+})
+
+oppMap.addEventListener('click', openOppMap)
+
+myBoard.addEventListener('click', backToMyBoard)
