@@ -99,26 +99,88 @@ function buildNPC() {
   }
   for (i = 0; i <= 99; i++) {
     npcChoices.push(i)
-    npcPlaceGrid.push(i)
   }
-  place = 0
-  // for (i = 0; i < 14; i++) {
-  //   npcBoardCells[place].classList.add('secret')
-  //   place += 1
-  // }
+
   // //random placement of npc's bubbles
 
   //bubble size
   let npcBub = 5;
+  let direction
   function setDirection() {
     direction = Math.floor(Math.random() * 2) //=> 0 is horiz, 1 is vert
   }
   // iterate through each bubble (4 times, subtracting npcBub each time)
   for (i = 1; i <= 4; i++) {
     function placeRandom() {
+      setDirection()
+      function checkAvailableNPC() {
+        npcPlaceGrid.splice(0, npcPlaceGrid.length)
+        if (direction === 0) { //horizontal available to choose
+          switch (npcBub) {
+            case 5:
+              for (k = 0; k < npcBoardCells.length; k++) {
+                npcPlaceGrid.push(k)
+                if (k === 5 || npcBoardCells[k].id.includes(6, 1)) {
+                  k += 4;
+                }
+              }
+              break;
+            case 4:
+              for (k = 0; k < npcBoardCells.length; k++) {
+                npcPlaceGrid.push(k)
+                if (k === 6 || npcBoardCells[k].id.includes(7, 1)) {
+                  k += 3;
+                }
+              }
+              break;
+            case 3:
+              for (k = 0; k < npcBoardCells.length; k++) {
+                npcPlaceGrid.push(k)
+                if (k === 7 || npcBoardCells[k].id.includes(8, 1)) {
+                  k += 2;
+                }
+              }
+              break;
+            case 2:
+              for (k = 0; k < npcBoardCells.length; k++) {
+                npcPlaceGrid.push(k)
+                if (k === 8 || npcBoardCells[k].id.includes(9, 1)) {
+                  k += 1;
+                }
+              }
+              break;
+            default:
+          }
+        } else if (direction === 1) { // vertical available to choose
+          switch (npcBub) {
+            case 5:
+              for (k = 0; k < 60; k++) {
+                npcPlaceGrid.push(k)
+              }
+              break;
+            case 4:
+              for (k = 0; k < 70; k++) {
+                npcPlaceGrid.push(k)
+              }
+              break;
+            case 3:
+              for (k = 0; k < 80; k++) {
+                npcPlaceGrid.push(k)
+              }
+              break;
+            case 2:
+              for (k = 0; k < 90; k++) {
+                npcPlaceGrid.push(k)
+              }
+              break;
+            default:
+          }
+        }
+      }
+      checkAvailableNPC()
+      console.log(npcPlaceGrid)
       let index = Math.floor(Math.random() * npcPlaceGrid.length);
       let npcSet = npcPlaceGrid[index]
-      setDirection()
       let placeable = false
       function checkPlaceable() {
         npcSetCheck = npcSet
@@ -127,7 +189,8 @@ function buildNPC() {
           switch (npcBub) {
             case 5:
               for (h = 0; h < 5; h++) {
-                if (npcBoardCells[npcSetCheck].classList.contains('secret')) {
+                let result = npcBoardCells[npcSetCheck].classList.contains('secret')
+                if (result) {
                   secretsHere += 1
                   npcSetCheck++
                 } else {
@@ -142,7 +205,8 @@ function buildNPC() {
               break;
             case 4:
               for (h = 0; h < 4; h++) {
-                if (npcBoardCells[npcSetCheck].classList.contains('secret')) {
+                let result = npcBoardCells[npcSetCheck].classList.contains('secret')
+                if (result) {
                   secretsHere += 1
                   npcSetCheck++
                 } else {
@@ -157,7 +221,8 @@ function buildNPC() {
               break;
             case 3:
               for (h = 0; h < 3; h++) {
-                if (npcBoardCells[npcSetCheck].classList.contains('secret')) {
+                let result = npcBoardCells[npcSetCheck].classList.contains('secret')
+                if (result) {
                   secretsHere += 1
                   npcSetCheck++
                 } else {
@@ -172,7 +237,8 @@ function buildNPC() {
               break;
             case 2:
               for (h = 0; h < 2; h++) {
-                if (npcBoardCells[npcSetCheck].classList.contains('secret')) {
+                let result = npcBoardCells[npcSetCheck].classList.contains('secret')
+                if (result) {
                   secretsHere += 1
                   npcSetCheck++
                 } else {
@@ -191,9 +257,10 @@ function buildNPC() {
           switch (npcBub) {
             case 5:
               for (h = 0; h < 5; h++) {
-                if (npcBoardCells[npcSetCheck].classList.contains('secret')) {
+                let result = npcBoardCells[npcSetCheck].classList.contains('secret')
+                if (result) {
                   secretsHere++
-                  npcsetcheck += 10
+                  npcSetCheck += 10
                 } else {
                   npcSetCheck += 10
                 }
@@ -206,9 +273,10 @@ function buildNPC() {
               break;
             case 4:
               for (h = 0; h < 4; h++) {
-                if (npcBoardCells[npcSetCheck].classList.contains('secret')) {
+                let result = npcBoardCells[npcSetCheck].classList.contains('secret')
+                if (result) {
                   secretsHere++
-                  npcsetcheck += 10
+                  npcSetCheck += 10
                 } else {
                   npcSetCheck += 10
                 }
@@ -221,9 +289,10 @@ function buildNPC() {
               break;
             case 3:
               for (h = 0; h < 3; h++) {
-                if (npcBoardCells[npcSetCheck].classList.contains('secret')) {
+                let result = npcBoardCells[npcSetCheck].classList.contains('secret')
+                if (result) {
                   secretsHere++
-                  npcsetcheck += 10
+                  npcSetCheck += 10
                 } else {
                   npcSetCheck += 10
                 }
@@ -236,9 +305,10 @@ function buildNPC() {
               break;
             case 2:
               for (h = 0; h < 2; h++) {
-                if (npcBoardCells[npcSetCheck].classList.contains('secret')) {
+                let result = npcBoardCells[npcSetCheck].classList.contains('secret')
+                if (result) {
                   secretsHere++
-                  npcsetcheck += 10
+                  npcSetCheck += 10
                 } else {
                   npcSetCheck += 10
                 }
@@ -267,13 +337,10 @@ function buildNPC() {
             npcSet += 10
           }
         }
-        npcPlaceGrid.splice(index, npcBub);
         npcBub--
       } else {
         placeRandom()
       }
-      console.log(npcPlaceGrid)
-      console.log(npcBub)
     }
     placeRandom()
   }
