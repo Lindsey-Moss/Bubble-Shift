@@ -4,6 +4,7 @@
 
 const body = document.querySelector('body')
 const main = document.querySelector('main')
+const endScreen = document.querySelector('#end-screen')
 const aside = document.querySelector('aside')
 const bubbleCont = document.querySelector('.bubble-list')
 const bubbleList = document.querySelectorAll('.bubble')
@@ -561,16 +562,12 @@ function setGuess() {
       activeCell.classList.add('hit')
       playerHits++
       checkWin()
-      jsyk.innerHTML = ''
-      jsyk.style.opacity = '1'
-      jsyk.appendChild(hitMsg)
-      setTimeout(switchTurn, 2500);
     } else if (!activeCell.classList.contains('secret') && (!activeCell.classList.contains('hit') || !activeCell.classList.contains('miss'))) {
       activeCell.classList.add('miss')
       jsyk.innerHTML = ''
       jsyk.style.opacity = '1'
       jsyk.appendChild(missMsg)
-      setTimeout(switchTurn, 2500);
+      setTimeout(switchTurn, 2000);
     }
   } else { }
 
@@ -579,9 +576,9 @@ function setGuess() {
 function checkWin() {
   if (playerHits === 14) {
     jsyk.innerHTML = ''
-    jsyk.innerText = `Player wins!`
-    jsyk.setAttribute('class', 'gentle')
     jsyk.style.opacity = '1'
+    jsyk.setAttribute('id', 'endscreen')
+    jsyk.innerHTML = `You won! Congratulations! :D`
     npcBoardCells.forEach((cell) => {
       cell.removeEventListener('mouseover', gameHoverCell);
       cell.removeEventListener('mouseout', gameIdleCell);
@@ -589,14 +586,23 @@ function checkWin() {
     })
   } else if (npcHits === 14) {
     jsyk.innerHTML = ''
-    jsyk.innerText = `The computer wins!`
-    jsyk.setAttribute('class', 'alert')
     jsyk.style.opacity = '1'
+    jsyk.setAttribute('id', 'endscreen')
+    jsyk.innerHTML = `The computer wins! Now wasn't that fun? :)`
     npcBoardCells.forEach((cell) => {
       cell.removeEventListener('mouseover', gameHoverCell);
       cell.removeEventListener('mouseout', gameIdleCell);
       cell.removeEventListener('click', setGuess);
     })
+  } else {
+    jsyk.innerHTML = ''
+    jsyk.style.opacity = '1'
+    if (turnIs === 'player') {
+      jsyk.appendChild(hitMsg)
+    } else if (turnIs === 'npc') {
+      jsyk.appendChild(npcHitMsg)
+    }
+    setTimeout(switchTurn, 2000);
   }
 }
 
@@ -615,10 +621,8 @@ function npcTurn() {
     setTimeout(switchTurn, 2500)
   } else if (boardCells[npcGuess].classList.contains('taken')) {
     boardCells[npcGuess].classList.add('hit')
-    jsyk.innerHTML = ''
-    jsyk.appendChild(npcHitMsg)
     npcHits++
-    setTimeout(switchTurn, 2500)
+    checkWin()
   }
 }
 

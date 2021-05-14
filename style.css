@@ -6,16 +6,6 @@ body {
   overflow-x: hidden;
 }
 
-#end-screen {
-  z-index: 5;
-  width: 100%;
-  height:30%;
-  margin: 0 auto;
-  padding-top: 50%;
-  background: lightsteelblue;
-  color: darkblue;
-}
-
 #jsyk {
   width: 100vw;
   transform: translateX(-15vw);
@@ -37,6 +27,26 @@ body {
 
 .alert {
   background: orange;
+}
+
+#endscreen {
+  width: 100vw;
+  transform: translateX(-15vw);
+  border: none;
+  position: absolute;
+  padding: 2vmin;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  font-family: sans-serif;
+  background-image: url(game-files/widescreen-bubbles.png);
+  background-size: cover;
+  padding: 20px;
+  color: aliceblue;
+  font-size: 2em;
+  font-weight: bold;
+  text-shadow: 0 0 16px navy;
+  text-align: center;
 }
 
 main {
