@@ -1,9 +1,11 @@
 body {
   width: 70vw;
-  background: aquamarine;
+  background-image: url(game-files/bg-clouds.jpg);
+  background-size: cover;
   margin: 0 auto;
   overflow-y: hidden;
   overflow-x: hidden;
+  font-family: 'Comfortaa', cursive;
 }
 
 #jsyk {
@@ -16,9 +18,11 @@ body {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-  font-family: sans-serif;
   font-size: 1.5em;
   text-align: center;
+  font-family: 'Comfortaa', cursive;
+  line-height: normal;
+  border-radius: 0%;
 }
 
 .gentle {
@@ -41,12 +45,13 @@ body {
   font-family: sans-serif;
   background-image: url(game-files/widescreen-bubbles.png);
   background-size: cover;
-  padding: 20px;
+  padding: 30px;
   color: aliceblue;
   font-size: 2em;
   font-weight: bold;
   text-shadow: 0 0 16px navy;
   text-align: center;
+  border-radius: 0%;
 }
 
 main {
@@ -80,6 +85,11 @@ aside {
   color: black;
 }
 
+.closebtn:hover {
+  color: white;
+  transition: color 0.2s;
+}
+
 .openbtn {
   position: absolute;
   z-index: 1;
@@ -91,6 +101,11 @@ aside {
   background: lightpink;
   padding: 6px 14px;
   vertical-align: middle;
+}
+
+.openbtn:hover {
+  color: white;
+  transition: color 0.2s;
 }
 
 .bubble-list {
@@ -110,6 +125,10 @@ aside {
   border: 2px solid black;
   background: yellow;
   padding: 5px;
+  text-align: center;
+  line-height: normal;
+  cursor: pointer;
+  border-radius: 0%;
 }
 
 .playing {
@@ -121,16 +140,29 @@ aside {
 .option {
   padding: 4px;
   margin-bottom: 10px;
+  text-align: center;
+  font-family: 'Comfortaa', cursive;
+  line-height: normal;
+  padding:5px;
+  border-radius: 5%;
 }
 
-/* #opponent {
+.option:hover {
+  color: white;
+  transition: color 0.2s;
+  cursor: pointer;
+}
 
-} */
+.clicked {
+  background: teal;
+  color: white;
+}
 
 button {
   width: 100px;
   height: 30px;
   margin: 20px;
+  font-family: 'Comfortaa', cursive;
 }
 
 
@@ -153,28 +185,47 @@ THE GAME BOARDS
   margin-left: 5vmin;
   grid-template-columns: repeat(11,8vmin);
   grid-template-rows: repeat(11,8vmin);
+  gap: 2px;
   margin-bottom: 5vmin;
-}
-
-div {
-  border: 2px solid red;
+  text-align: center;
+  font-family: 'Codystar', cursive;
 }
 
 .label {
-  background: white;
+  background: rgba(255,255,255,0.7);
+  line-height: 8vmin;
+  font-family: 'Codystar', cursive;
+  font-size: 2em;
+  font-weight: bold;
+  border-radius: 0%;
+  cursor:help;
 }
 
 .playable {
-  background: dodgerblue;
+  line-height: 8vmin;
+  background: none;
+}
+
+.guessable {
+  font-family: 'Codystar', cursive;
+  line-height: 8vmin;
+  background: rgba(255,255,255,0.5);
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .active {
   background-color: yellow;
+  font-weight: bold;
+  border-radius: 50%;
 }
 
 .taken {
   background: gray;
   border-radius: 50%;
+  color: white;
+  cursor: default;
+  cursor: not-allowed;
 }
 
 .npcboard {
@@ -182,13 +233,21 @@ div {
   margin-left: 5vmin;
   grid-template-columns: repeat(11,8vmin);
   grid-template-rows: repeat(11,8vmin);
+  gap: 2px;
   margin-bottom: 5vmin;
+  text-align: center;
 }
 
 .hit {
   background: red;
+  border-radius: 50%;
+  font-weight: bold;
+  cursor: not-allowed;
 }
 
 .miss {
   background: black;
+  border-radius: 50%;
+  color: white;
+  cursor: not-allowed;
 }

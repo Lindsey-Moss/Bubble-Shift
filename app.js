@@ -54,6 +54,9 @@ for (i = 1; i <= 121; i++) {
   newCell.setAttribute('id', `${letters[pointer]}${colCount}`)
   if (colCount === 0 || i < 12) {
     newCell.classList.add('label')
+    if (colCount === 0) {
+      newCell.innerText = `${letters[pointer]}`
+    }
   }
   colCount++
   if (i > 11 && colCount >= 2 && colCount <= 11) {
@@ -73,11 +76,16 @@ function buildNPC() {
   pointer = 0;
   for (i = 1; i <= 121; i++) {
     let newCell = document.createElement('div');
+    newCell.classList.add('guessable')
     npcBoard.appendChild(newCell)
     newCell.innerText = `${letters[pointer]}${colCount}`
     newCell.setAttribute('id', `${letters[pointer]}${colCount}`)
     if (colCount === 0 || i < 12) {
+      newCell.classList.remove('guessable')
       newCell.classList.add('label')
+      if (colCount === 0) {
+        newCell.innerText = `${letters[pointer]}`
+      }
     }
     colCount++
     if (i > 11 && colCount >= 2 && colCount <= 11) {
@@ -513,16 +521,34 @@ function checkReady() {
 
 function openOppMap() {
   if (gameActive === false) {
-    jsyk.innerHTML = ''
-    jsyk.innerText = `The game hasn't even started yet!`
-    jsyk.style.opacity = '1'
-    jsyk.setAttribute('class', 'alert')
+    if (!jsyk.id.includes('endscreen')) {
+      jsyk.style.opacity = 0
+      setTimeout(function () {
+        jsyk.innerHTML = ''
+        jsyk.innerText = `The game hasn't even started yet!`
+        jsyk.style.opacity = '1'
+        jsyk.style.transition = 'opacity 0.5s'
+        jsyk.setAttribute('class', 'alert')
+      }, 300)
+      setTimeout(function () {
+        jsyk.style.opacity = 0
+      }, 1500)
+      setTimeout(function () {
+        jsyk.innerHTML = ''
+        jsyk.appendChild(preGame)
+        jsyk.setAttribute('class', 'gentle')
+        jsyk.style.opacity = 1
+      }, 1900)
+    } else if (jsyk.id.includes('endscreen')) {
+    }
   } else if (npcBoard.classList.contains('visible')) {
 
   } else {
     jsyk.innerHTML = ''
     playerBoard.classList.add('invisible')
     playerBoard.classList.remove('visible')
+    myBoard.classList.remove('clicked')
+    oppMap.classList.add('clicked')
     npcBoard.classList.add('visible')
     npcBoard.classList.remove('invisible')
     jsyk.style.opacity = '0'
@@ -535,8 +561,10 @@ function backToMyBoard() {
   } else {
     playerBoard.classList.remove('invisible')
     playerBoard.classList.add('visible')
+    myBoard.classList.add('clicked')
     npcBoard.classList.remove('visible')
     npcBoard.classList.add('invisible')
+    oppMap.classList.remove('clicked')
   }
 }
 
@@ -558,11 +586,11 @@ function gameIdleCell() {
 function setGuess() {
   if (turnIs === 'player') {
     activeCell = document.querySelector('.active')
-    if (activeCell.classList.contains('secret') && (!activeCell.classList.contains('hit') || !activeCell.classList.contains('miss'))) {
+    if (activeCell.classList.contains('secret') && !activeCell.classList.contains('hit')) {
       activeCell.classList.add('hit')
       playerHits++
       checkWin()
-    } else if (!activeCell.classList.contains('secret') && (!activeCell.classList.contains('hit') || !activeCell.classList.contains('miss'))) {
+    } else if (!activeCell.classList.contains('secret') && !activeCell.classList.contains('miss')) {
       activeCell.classList.add('miss')
       jsyk.innerHTML = ''
       jsyk.style.opacity = '1'
@@ -722,11 +750,9 @@ gameStart.addEventListener('click', () => {
   jsyk.removeChild(readyMsg)
   jsyk.style.opacity = '1'
   jsyk.appendChild(turnMsg)
-  const lilHint = document.createElement('span')
-  lilHint.innerHTML = `<p><sub><i>Check your opponent's map and make your guess!</i></sub></p>`
-  setTimeout(function () {
-    jsyk.appendChild(lilHint)
-  }, 2000)
+  boardCells.forEach((cell) => {
+    cell.style.cursor = 'not-allowed';
+  })
   npcBoardCells.forEach((cell) => {
     cell.addEventListener('mouseover', gameHoverCell);
     cell.addEventListener('mouseout', gameIdleCell);
