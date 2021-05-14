@@ -6,6 +6,16 @@ body {
   overflow-x: hidden;
 }
 
+#end-screen {
+  z-index: 5;
+  width: 100%;
+  height:30%;
+  margin: 0 auto;
+  padding-top: 50%;
+  background: lightsteelblue;
+  color: darkblue;
+}
+
 #jsyk {
   width: 100vw;
   transform: translateX(-15vw);
@@ -130,6 +140,7 @@ THE GAME BOARDS
 
 .playerboard {
   padding: 10px;
+  margin-left: 5vmin;
   grid-template-columns: repeat(11,8vmin);
   grid-template-rows: repeat(11,8vmin);
   margin-bottom: 5vmin;
@@ -158,6 +169,7 @@ div {
 
 .npcboard {
   padding: 10px;
+  margin-left: 5vmin;
   grid-template-columns: repeat(11,8vmin);
   grid-template-rows: repeat(11,8vmin);
   margin-bottom: 5vmin;

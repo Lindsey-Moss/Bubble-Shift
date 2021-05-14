@@ -65,6 +65,8 @@ for (i = 1; i <= 121; i++) {
   }
 }
 
+const npcChoices = [];
+
 function buildNPC() {
   colCount = 0;
   pointer = 0;
@@ -84,6 +86,9 @@ function buildNPC() {
       colCount = 0
       pointer++
     }
+  }
+  for (i = 0; i < 99; i++) {
+    npcChoices.push(i)
   }
   place = 0
   for (i = 0; i < 14; i++) {
@@ -123,13 +128,11 @@ function buildNPC() {
 const preGame = document.createElement('span')
 preGame.innerText = `Place all your bubbles where you'd like them. :)`
 if (gameActive === false) {
-  jsyk.appendChild(preGame)
   jsyk.setAttribute('class', 'gentle')
+  jsyk.appendChild(preGame)
   jsyk.style.opacity = '1'
   jsyk.style.transition = 'opacity 0.5s'
-} else {
-  jsyk.removeChild(preGame)
-}
+} else { }
 
 const gameStart = document.createElement('button')
 gameStart.innerText = 'Yes'
@@ -138,6 +141,21 @@ redo.innerText = 'No'
 const readyMsg = document.createElement('span')
 readyMsg.innerHTML = `<p>Are you happy with this placement?</p><p>Would you like to begin the game?</p>`
 
+const turnMsg = document.createElement('span')
+turnMsg.innerText = `Go ahead! It's your turn. :)`
+const npcTurnMsg = document.createElement('span')
+npcTurnMsg.innerText = `Now it's your opponent's turn...`
+
+const hitMsg = document.createElement('span')
+hitMsg.innerHTML = `<i>Pop!</i> You got one!`
+const npcHitMsg = document.createElement('span')
+npcHitMsg.innerHTML = `<i>Pop!</i> They got one!`
+
+
+const missMsg = document.createElement('span')
+missMsg.innerHTML = `Ohp, there wasn't anything there, that time...`
+const npcMissMsg = document.createElement('span')
+npcMissMsg.innerHTML = `Ohp! They missed this time!`
 
 
 /////////////////////////////////////
@@ -285,7 +303,13 @@ function hoverCell(e) {
     jsyk.style.opacity = '1'
     jsyk.style.transition = 'opacity 0.5s'
   } else {
-    jsyk.style.opacity = '0'
+    switch (bubbleSize) {
+      case 0:
+        jsyk.style.opacity = '1';
+        break;
+      default:
+        jsyk.style.opacity = '0';
+    }
   }
   if (assume === 'horizontal') {
     if (activeCell.classList.contains('available') && (!activeCell.classList.contains('taken'))) {
@@ -368,7 +392,13 @@ function hoverCell(e) {
       let lastCell = activeCells[activeCells.length - 1].id[0]
       const checkForBreak = () => {
         if (bubLastCell === lastCell) {
-          jsyk.style.opacity = '0'
+          switch (bubbleSize) {
+            case 0:
+              jsyk.style.opacity = '1';
+              break;
+            default:
+              jsyk.style.opacity = '0';
+          }
         } else {
           for (i = 0; i < boardCells.length; i++) {
             boardCells[i].classList.remove('active');
@@ -482,37 +512,31 @@ function checkReady() {
 
 function openOppMap() {
   if (gameActive === false) {
+    jsyk.innerHTML = ''
     jsyk.innerText = `The game hasn't even started yet!`
     jsyk.style.opacity = '1'
     jsyk.setAttribute('class', 'alert')
   } else if (npcBoard.classList.contains('visible')) {
-    jsyk.innerText = `You're already here! ;)`
-    jsyk.style.opacity = '1'
-    jsyk.setAttribute('class', 'alert')
+
   } else {
+    jsyk.innerHTML = ''
     playerBoard.classList.add('invisible')
     playerBoard.classList.remove('visible')
     npcBoard.classList.add('visible')
     npcBoard.classList.remove('invisible')
+    jsyk.style.opacity = '0'
   }
 }
 
 function backToMyBoard() {
   if (playerBoard.classList.contains('visible')) {
-    jsyk.innerText = `You're already here! ;)`
-    jsyk.style.opacity = '1'
-    jsyk.setAttribute('class', 'alert')
+
   } else {
     playerBoard.classList.remove('invisible')
     playerBoard.classList.add('visible')
     npcBoard.classList.remove('visible')
     npcBoard.classList.add('invisible')
   }
-}
-
-let jsykInterval
-function clearMessage() {
-  jsyk.style.opacity = '0'
 }
 
 function gameHoverCell(e) {
@@ -535,25 +559,87 @@ function setGuess() {
     activeCell = document.querySelector('.active')
     if (activeCell.classList.contains('secret') && (!activeCell.classList.contains('hit') || !activeCell.classList.contains('miss'))) {
       activeCell.classList.add('hit')
-      playerHits += 1
-      turnIs = 'npc'
+      playerHits++
+      checkWin()
+      jsyk.innerHTML = ''
+      jsyk.style.opacity = '1'
+      jsyk.appendChild(hitMsg)
+      setTimeout(switchTurn, 2500);
     } else if (!activeCell.classList.contains('secret') && (!activeCell.classList.contains('hit') || !activeCell.classList.contains('miss'))) {
       activeCell.classList.add('miss')
-      turnIs = 'npc'
+      jsyk.innerHTML = ''
+      jsyk.style.opacity = '1'
+      jsyk.appendChild(missMsg)
+      setTimeout(switchTurn, 2500);
     }
   } else { }
-  checkWin()
+
 }
 
 function checkWin() {
   if (playerHits === 14) {
+    jsyk.innerHTML = ''
     jsyk.innerText = `Player wins!`
     jsyk.setAttribute('class', 'gentle')
     jsyk.style.opacity = '1'
+    npcBoardCells.forEach((cell) => {
+      cell.removeEventListener('mouseover', gameHoverCell);
+      cell.removeEventListener('mouseout', gameIdleCell);
+      cell.removeEventListener('click', setGuess);
+    })
   } else if (npcHits === 14) {
+    jsyk.innerHTML = ''
     jsyk.innerText = `The computer wins!`
+    jsyk.setAttribute('class', 'alert')
+    jsyk.style.opacity = '1'
+    npcBoardCells.forEach((cell) => {
+      cell.removeEventListener('mouseover', gameHoverCell);
+      cell.removeEventListener('mouseout', gameIdleCell);
+      cell.removeEventListener('click', setGuess);
+    })
+  }
+}
+
+function npcTurn() {
+  let index = Math.floor(Math.random() * npcChoices.length);
+  let npcGuess = npcChoices[index]
+  npcChoices.splice(index, 1);
+  // if (boardCells[npcGuess].classList.contains('hit') || boardCells[npcGuess].classList.contains('miss')) {
+  //   npcGuess = npcChoice()
+  // }
+  // else 
+  if (!boardCells[npcGuess].classList.contains('taken')) {
+    boardCells[npcGuess].classList.add('miss')
+    jsyk.innerHTML = ''
+    jsyk.appendChild(npcMissMsg)
+    setTimeout(switchTurn, 2500)
+  } else if (boardCells[npcGuess].classList.contains('taken')) {
+    boardCells[npcGuess].classList.add('hit')
+    jsyk.innerHTML = ''
+    jsyk.appendChild(npcHitMsg)
+    npcHits++
+    setTimeout(switchTurn, 2500)
+  }
+}
+
+function switchTurn() {
+  if (turnIs === 'player') {
+    turnIs = 'npc'
+    jsyk.innerHTML = ''
+    jsyk.style.opacity = '1'
+    jsyk.setAttribute('class', 'alert')
+    jsyk.appendChild(npcTurnMsg)
+    backToMyBoard()
+    setTimeout(npcTurn, 2500)
+  } else if (turnIs === 'npc') {
+    turnIs = 'player'
+    jsyk.innerHTML = ''
     jsyk.setAttribute('class', 'gentle')
     jsyk.style.opacity = '1'
+    jsyk.appendChild(turnMsg)
+    setTimeout(function () {
+      openOppMap()
+    }, 2000)
   }
 }
 
@@ -628,14 +714,21 @@ gameStart.addEventListener('click', () => {
   gameActive = true;
   buildNPC()
   bubbleCont.style.display = 'none';
-  jsykInterval = setInterval(clearMessage, 2000);
   jsyk.style.opacity = '0';
-  jsyk.innerText = '';
+  jsyk.removeChild(readyMsg)
+  jsyk.style.opacity = '1'
+  jsyk.appendChild(turnMsg)
+  const lilHint = document.createElement('span')
+  lilHint.innerHTML = `<p><sub><i>Check your opponent's map and make your guess!</i></sub></p>`
+  setTimeout(function () {
+    jsyk.appendChild(lilHint)
+  }, 2000)
   npcBoardCells.forEach((cell) => {
     cell.addEventListener('mouseover', gameHoverCell);
     cell.addEventListener('mouseout', gameIdleCell);
     cell.addEventListener('click', setGuess);
   })
+
 })
 
 redo.addEventListener('click', () => {
@@ -656,7 +749,7 @@ redo.addEventListener('click', () => {
       checkAvailable()
     })
   })
-  jsyk.innerText = ''
+  jsyk.removeChild(readyMsg)
   jsyk.style.opacity = '0'
   placed5 = false;
   placed4 = false;
