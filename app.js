@@ -420,34 +420,58 @@ function checkAvailable() {
   if (assume === 'horizontal') {
     switch (bubbleSize) {
       case 5:
-        for (i = 0; i < boardCells.length; i++) {
-          boardCells[i].classList.add('available')
-          if (i === 5 || boardCells[i].id.includes(6, 1)) {
-            i += 4;
+        if (placed5 === true) {
+          boardCells.forEach((cell) => {
+            cell.classList.remove('available')
+          })
+        } else {
+          for (i = 0; i < boardCells.length; i++) {
+            boardCells[i].classList.add('available')
+            if (i === 5 || boardCells[i].id.includes(6, 1)) {
+              i += 4;
+            }
           }
         }
         break;
       case 4:
-        for (i = 0; i < boardCells.length; i++) {
-          boardCells[i].classList.add('available')
-          if (i === 6 || boardCells[i].id.includes(7, 1)) {
-            i += 3;
+        if (placed4 === true) {
+          boardCells.forEach((cell) => {
+            cell.classList.remove('available')
+          })
+        } else {
+          for (i = 0; i < boardCells.length; i++) {
+            boardCells[i].classList.add('available')
+            if (i === 6 || boardCells[i].id.includes(7, 1)) {
+              i += 3;
+            }
           }
         }
         break;
       case 3:
-        for (i = 0; i < boardCells.length; i++) {
-          boardCells[i].classList.add('available')
-          if (i === 7 || boardCells[i].id.includes(8, 1)) {
-            i += 2;
+        if (placed3 === true) {
+          boardCells.forEach((cell) => {
+            cell.classList.remove('available')
+          })
+        } else {
+          for (i = 0; i < boardCells.length; i++) {
+            boardCells[i].classList.add('available')
+            if (i === 7 || boardCells[i].id.includes(8, 1)) {
+              i += 2;
+            }
           }
         }
         break;
       case 2:
-        for (i = 0; i < boardCells.length; i++) {
-          boardCells[i].classList.add('available')
-          if (i === 8 || boardCells[i].id.includes(9, 1)) {
-            i += 1;
+        if (placed2 === true) {
+          boardCells.forEach((cell) => {
+            cell.classList.remove('available')
+          })
+        } else {
+          for (i = 0; i < boardCells.length; i++) {
+            boardCells[i].classList.add('available')
+            if (i === 8 || boardCells[i].id.includes(9, 1)) {
+              i += 1;
+            }
           }
         }
         break;
@@ -459,23 +483,47 @@ function checkAvailable() {
   } else if (assume === 'vertical') {
     switch (bubbleSize) {
       case 5:
-        for (i = 0; i < 60; i++) {
-          boardCells[i].classList.add('available')
+        if (placed5 === true) {
+          boardCells.forEach((cell) => {
+            cell.classList.remove('available')
+          })
+        } else {
+          for (i = 0; i < 60; i++) {
+            boardCells[i].classList.add('available')
+          }
         }
         break;
       case 4:
-        for (i = 0; i < 70; i++) {
-          boardCells[i].classList.add('available')
+        if (placed4 === true) {
+          boardCells.forEach((cell) => {
+            cell.classList.remove('available')
+          })
+        } else {
+          for (i = 0; i < 70; i++) {
+            boardCells[i].classList.add('available')
+          }
         }
         break;
       case 3:
-        for (i = 0; i < 80; i++) {
-          boardCells[i].classList.add('available')
+        if (placed3 === true) {
+          boardCells.forEach((cell) => {
+            cell.classList.remove('available')
+          })
+        } else {
+          for (i = 0; i < 80; i++) {
+            boardCells[i].classList.add('available')
+          }
         }
         break;
       case 2:
-        for (i = 0; i < 90; i++) {
-          boardCells[i].classList.add('available')
+        if (placed2 === true) {
+          boardCells.forEach((cell) => {
+            cell.classList.remove('available')
+          })
+        } else {
+          for (i = 0; i < 90; i++) {
+            boardCells[i].classList.add('available')
+          }
         }
         break;
       default:
@@ -489,37 +537,37 @@ function checkAvailable() {
       cell.classList.remove('available')
     }
   })
-  switch (bubbleSize) {
-    case 5:
-      if (placed5 === true) {
-        boardCells.forEach((cell) => {
-          cell.classList.remove('active')
-        })
-      }
-      break;
-    case 4:
-      if (placed4 === true) {
-        boardCells.forEach((cell) => {
-          cell.classList.remove('active')
-        })
-      }
-      break;
-    case 3:
-      if (placed3 === true) {
-        boardCells.forEach((cell) => {
-          cell.classList.remove('active')
-        })
-      }
-      break;
-    case 2:
-      if (placed2 === true) {
-        boardCells.forEach((cell) => {
-          cell.classList.remove('active')
-        })
-      }
-      break;
-    default:
-  }
+  // switch (bubbleSize) {
+  //   case 5:
+  //     if (placed5 === true) {
+  //       boardCells.forEach((cell) => {
+  //         cell.classList.remove('active')
+  //       })
+  //     }
+  //     break;
+  //   case 4:
+  //     if (placed4 === true) {
+  //       boardCells.forEach((cell) => {
+  //         cell.classList.remove('active')
+  //       })
+  //     }
+  //     break;
+  //   case 3:
+  //     if (placed3 === true) {
+  //       boardCells.forEach((cell) => {
+  //         cell.classList.remove('active')
+  //       })
+  //     }
+  //     break;
+  //   case 2:
+  //     if (placed2 === true) {
+  //       boardCells.forEach((cell) => {
+  //         cell.classList.remove('active')
+  //       })
+  //     }
+  //     break;
+  //   default:
+  // }
 }
 
 function hoverCell(e) {
@@ -532,7 +580,7 @@ function hoverCell(e) {
       jsyk.style.opacity = '0';
   }
   checkAvailable()
-  if ((!activeCell.classList.contains('available')) && (!activeCell.classList.contains('taken')) && (bubbleSize > 0)) {
+  if ((!activeCell.classList.contains('available')) && (!activeCell.classList.contains('taken')) && (bubbleSize > 0) && ((bubbleSize === 5 && placed5 === false) || (bubbleSize === 4 && placed4 === false) || (bubbleSize === 3 && placed3 === false) || (bubbleSize === 2 && placed2 === false))) {
     jsyk.setAttribute('class', 'alert')
     jsyk.innerText = `Bubbles must fit on the board.`
     jsyk.style.opacity = '1'

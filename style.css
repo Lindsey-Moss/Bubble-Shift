@@ -44,7 +44,7 @@ body {
   top: 0;
   font-family: 'Comfortaa', cursive;
   background-image: url(game-files/bg-watercolor.png);
-  background-size:contain;
+  background-size:cover;
   padding: 30px;
   color: aliceblue;
   font-size: 2em;
@@ -135,7 +135,7 @@ aside {
 .bubble {
   border: 1px solid black;
   margin: 1px;
-  background: #FFC587;
+  background: yellow;
   padding: 5px;
   text-align: center;
   cursor: pointer;
@@ -299,7 +299,7 @@ THE GAME BOARDS
 }
 
 .active {
-  background-color: #FFC587;
+  background-color: yellow;
   font-weight: bold;
   border-radius: 50%;
   color: black;
@@ -397,7 +397,7 @@ h2 {
 }
 
 .bubbletext {
-  color:#FFC587;
+  color:yellow;
   font-weight: bolder;
   text-shadow:
   -1px -1px 0 #000,
