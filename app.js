@@ -6,7 +6,8 @@ const body = document.querySelector('body')
 const main = document.querySelector('main')
 const endScreen = document.querySelector('#end-screen')
 const aside = document.querySelector('aside')
-const bubbleCont = document.querySelector('.bubble-list')
+const bubbleCont = document.querySelector('.box')
+const bubbleCont2 = document.querySelector('.bubble-list')
 const bubbleList = document.querySelectorAll('.bubble')
 const playingMenu = document.querySelector('.playing')
 const playerBoard = document.querySelector('.playerboard')
@@ -16,15 +17,18 @@ const rotate = document.querySelector('.rotate')
 const jsyk = document.querySelector('#jsyk')
 let activeCells = document.getElementsByClassName('active')
 const oppMap = document.querySelector('#opponent')
+const scoreboard = document.querySelector('.scoreboard')
 const npcBoardCells = [];
 const myBoard = document.querySelector('#mine')
 const reviewRules = document.querySelector('#rules')
+const theRules = document.querySelector('.rules-doc')
 
 let bubbleSize = 0;
 let assume = 'vertical'
 bubbleCont.classList.add('verticalized')
 bubbleList.forEach((bubble) => {
   bubble.style.height = `${bubble.innerText}em`
+  bubble.style.lineHeight = `${bubble.innerText}em`
   bubble.style.width = `1em`
 })
 
@@ -38,7 +42,13 @@ gameActive = false;
 turnIs = 'player';
 
 let playerHits = 0;
+let playerMisses = 0;
+const showHits = document.querySelector('#hits')
+const showMisses = document.querySelector('#misses')
 let npcHits = 0;
+let npcMisses = 0;
+const showNPCHits = document.querySelector('#npcHits')
+const showNPCMisses = document.querySelector('#npcMisses')
 
 /////////////////////////////////////
 //// BOARD BUILD
@@ -392,13 +402,15 @@ function closeSide() {
   aside.style.width = 0;
   aside.style.padding = 0;
   bubbleCont.style.opacity = 0;
+  bubbleCont2.style.opacity = 0;
   playingMenu.style.opacity = 0;
 }
 
 function openSide() {
-  aside.style.width = '120px';
+  aside.style.width = '126px';
   aside.style.padding = '2vmin';
   bubbleCont.style.opacity = 1;
+  bubbleCont2.style.opacity = 1;
   playingMenu.style.opacity = 1;
 }
 
@@ -649,10 +661,12 @@ function idleCell() {
 function rotateFunc() {
   if (assume === 'horizontal') {
     assume = 'vertical'
+    rotate.innerText = `Rotate ⇋`
     bubbleCont.classList.remove('horizontalized')
     bubbleCont.classList.add('verticalized')
     bubbleList.forEach((bubble) => {
       bubble.style.height = `${bubble.innerText}em`
+      bubble.style.lineHeight = `${bubble.innerText}em`
       bubble.style.width = `1em`
     })
     boardCells.forEach((cell) => {
@@ -661,11 +675,13 @@ function rotateFunc() {
     checkAvailable()
   } else if (assume === 'vertical') {
     assume = 'horizontal'
+    rotate.innerText = `Rotate ⥮`
     bubbleCont.classList.remove('verticalized')
     bubbleCont.classList.add('horizontalized')
     bubbleList.forEach((bubble) => {
       bubble.style.width = `${bubble.innerText}em`
       bubble.style.height = `1em`
+      bubble.style.lineHeight = `1em`
     })
     boardCells.forEach((cell) => {
       cell.classList.remove('available')
@@ -768,6 +784,9 @@ function openOppMap() {
     oppMap.classList.add('clicked')
     npcBoard.classList.add('visible')
     npcBoard.classList.remove('invisible')
+    reviewRules.classList.remove('clicked')
+    theRules.classList.remove('visibleRules')
+    theRules.classList.add('invisible')
     jsyk.style.opacity = '0'
   }
 }
@@ -782,6 +801,26 @@ function backToMyBoard() {
     npcBoard.classList.remove('visible')
     npcBoard.classList.add('invisible')
     oppMap.classList.remove('clicked')
+    reviewRules.classList.remove('clicked')
+    theRules.classList.remove('visibleRules')
+    theRules.classList.add('invisible')
+  }
+}
+
+function seeRules() {
+  if (theRules.classList.contains('visible')) {
+
+  } else {
+    theRules.classList.remove('invisible')
+    theRules.classList.add('visibleRules')
+    reviewRules.classList.add('clicked')
+    playerBoard.classList.remove('visible')
+    playerBoard.classList.add('invisible')
+    myBoard.classList.remove('clicked')
+    npcBoard.classList.remove('visible')
+    npcBoard.classList.add('invisible')
+    oppMap.classList.remove('clicked')
+    jsyk.style.opacity = '0'
   }
 }
 
@@ -806,12 +845,15 @@ function setGuess() {
     if (activeCell.classList.contains('secret') && !activeCell.classList.contains('hit')) {
       activeCell.classList.add('hit')
       playerHits++
+      showHits.innerText = `${playerHits}`
       checkWin()
     } else if (!activeCell.classList.contains('secret') && !activeCell.classList.contains('miss')) {
       activeCell.classList.add('miss')
       jsyk.innerHTML = ''
       jsyk.style.opacity = '1'
       jsyk.appendChild(missMsg)
+      playerMisses++
+      showMisses.innerText = `${playerMisses}`
       setTimeout(switchTurn, 2000);
     }
   } else { }
@@ -859,10 +901,13 @@ function npcTurn() {
     boardCells[npcGuess].classList.add('miss')
     jsyk.innerHTML = ''
     jsyk.appendChild(npcMissMsg)
+    npcMisses++
+    showNPCMisses.innerText = `${npcMisses}`
     setTimeout(switchTurn, 2500)
   } else if (boardCells[npcGuess].classList.contains('taken')) {
     boardCells[npcGuess].classList.add('hit')
     npcHits++
+    showNPCHits.innerText = `${npcHits}`
     checkWin()
   }
 }
@@ -959,6 +1004,8 @@ gameStart.addEventListener('click', () => {
   gameActive = true;
   buildNPC()
   bubbleCont.style.display = 'none';
+  bubbleCont2.style.display = 'none';
+  scoreboard.style.opacity = 1;
   jsyk.style.opacity = '0';
   jsyk.removeChild(readyMsg)
   jsyk.style.opacity = '1'
@@ -1003,3 +1050,5 @@ redo.addEventListener('click', () => {
 oppMap.addEventListener('click', openOppMap)
 
 myBoard.addEventListener('click', backToMyBoard)
+
+reviewRules.addEventListener('click', seeRules)

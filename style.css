@@ -1,7 +1,7 @@
 body {
   width: 70vw;
-  background-image: url(game-files/bg-clouds.jpg);
-  background-size: cover;
+  background-image: url(game-files/bg-grassy.png);
+  background-size: stretch;
   margin: 0 auto;
   overflow-y: hidden;
   overflow-x: hidden;
@@ -42,14 +42,14 @@ body {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-  font-family: sans-serif;
-  background-image: url(game-files/widescreen-bubbles.png);
-  background-size: cover;
+  font-family: 'Comfortaa', cursive;
+  background-image: url(game-files/bg-watercolor.png);
+  background-size: stretch;
   padding: 30px;
   color: aliceblue;
   font-size: 2em;
   font-weight: bold;
-  text-shadow: 0 0 16px navy;
+  text-shadow: 0 0 16px black;
   text-align: center;
   border-radius: 0%;
 }
@@ -68,11 +68,11 @@ aside {
   position: fixed;
   height: 100vh;
   top: 0;
-  width: 120px;
+  width: 126px;
   padding: 2vmin;
   justify-content: center;
   align-items: center;
-  background: lightpink;
+  background: #F08080;
   transition: 0.5s;
 }
 
@@ -93,12 +93,12 @@ aside {
 .openbtn {
   position: absolute;
   z-index: 1;
-  top: 5vmin;
+  top: 6.9vmin;
   left: 0;
   border: none;
   cursor: pointer;
   font-size: 1.5em;
-  background: lightpink;
+  background: #F08080;
   padding: 6px 14px;
   vertical-align: middle;
 }
@@ -108,9 +108,20 @@ aside {
   transition: color 0.2s;
 }
 
-.bubble-list {
-  padding-top: 10vmin;
+.box {
+  height: 120px;
+  width: 120px;
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bubble-list {
+  display: flex;
+  flex-flow: column wrap;
+  margin-top: 10vmin;
+  padding: 3px;
+  background: rgba(255,255,255,0.3);
 }
 
 .verticalized {
@@ -118,17 +129,26 @@ aside {
 }
 
 .horizontalized {
-  flex-flow: column wrap;
+ flex-flow: column wrap;
 }
 
 .bubble {
-  border: 2px solid black;
-  background: yellow;
+  border: 1px solid black;
+  margin: 1px;
+  background: #FFC587;
   padding: 5px;
   text-align: center;
-  line-height: normal;
   cursor: pointer;
-  border-radius: 0%;
+  border-radius: 50%;
+}
+
+.bubble:active {
+  background: navajowhite;
+}
+
+.rotate {
+  align-self: center;
+  margin: 8px auto;
 }
 
 .playing {
@@ -154,7 +174,7 @@ aside {
 }
 
 .clicked {
-  background: teal;
+  background: #26466D;
   color: white;
 }
 
@@ -163,9 +183,62 @@ button {
   height: 30px;
   margin: 20px;
   font-family: 'Comfortaa', cursive;
+  background: black;
+  color: aliceblue;
+  border: none;
+  border-radius: 12px;
 }
 
+button:hover {
+  background: #26466D;
+}
 
+button:active {
+  background: teal;
+  color: aliceblue;
+}
+
+.scoreboard {
+  margin-top: 8vmin;
+  background: rgba(68, 43, 55, 0.9);
+  height: 195px;
+  width: 106px;
+  padding:10px;
+}
+
+h5 {
+  letter-spacing: 0.25em;
+  font-size: 0.6em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top:10px;
+  margin-bottom: 4px;
+  color: whitesmoke;
+  opacity: 0.9;
+}
+
+.scorekeep {
+  line-height: 1em;
+  font-size: 0.8em;
+  color: whitesmoke;
+  font-family: 'Comfortaa',cursive;
+  opacity: 0.9;
+}
+
+hr {
+  border-color: rgba(255,255,255,0.3);
+  margin: 25px 5px;
+}
+
+.score {
+  float: right;
+  margin-right: 22px;
+  line-height: 1em;
+  font-size: 1em;
+  color: lightcyan;
+  font-family: 'Codystar', cursive;
+  font-weight: bold;
+}
 
 /* 
 /////////////////////////////////////
@@ -176,48 +249,58 @@ THE GAME BOARDS
   display: grid;
 }
 
+.visibleRules {
+  display: flex;
+}
+
 .invisible {
   display: none;
 }
 
 .playerboard {
   padding: 10px;
-  margin-left: 5vmin;
-  grid-template-columns: repeat(11,8vmin);
-  grid-template-rows: repeat(11,8vmin);
+  margin-top: 2vmin;
+  margin-left: 14vmin;
+  grid-template-columns: repeat(11,7vmin);
+  grid-template-rows: repeat(11,7vmin);
   gap: 2px;
   margin-bottom: 5vmin;
   text-align: center;
   font-family: 'Codystar', cursive;
+  border-right: 1px solid rgba(255,255,255,0.3);
+  border-bottom: 1px solid rgba(255,255,255,0.3);
 }
 
 .label {
   background: rgba(255,255,255,0.7);
-  line-height: 8vmin;
+  line-height: 7vmin;
   font-family: 'Codystar', cursive;
   font-size: 2em;
   font-weight: bold;
   border-radius: 0%;
   cursor:help;
+  color: black;
 }
 
 .playable {
-  line-height: 8vmin;
+  line-height: 7vmin;
   background: none;
+  color:transparent;
 }
 
 .guessable {
   font-family: 'Codystar', cursive;
-  line-height: 8vmin;
+  line-height: 7vmin;
   background: rgba(255,255,255,0.5);
   border-radius: 50%;
   cursor: pointer;
 }
 
 .active {
-  background-color: yellow;
+  background-color: #FFC587;
   font-weight: bold;
   border-radius: 50%;
+  color: black;
 }
 
 .taken {
@@ -230,9 +313,9 @@ THE GAME BOARDS
 
 .npcboard {
   padding: 10px;
-  margin-left: 5vmin;
-  grid-template-columns: repeat(11,8vmin);
-  grid-template-rows: repeat(11,8vmin);
+  margin-left: 14vmin;
+  grid-template-columns: repeat(11,7vmin);
+  grid-template-rows: repeat(11,7vmin);
   gap: 2px;
   margin-bottom: 5vmin;
   text-align: center;
@@ -250,4 +333,71 @@ THE GAME BOARDS
   border-radius: 50%;
   color: white;
   cursor: not-allowed;
+}
+
+/* 
+/////////////////////////////////////
+THE RULES REVIEW
+/////////////////////////////////////
+*/
+
+.rules-doc {
+  margin: 0 auto;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items:center;
+}
+
+#ruleslist {
+  margin-left: 15vmin;
+  background: rgba(255,255,255,0.7);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 4px 4px 8px rgba(0,0,0,0.6);
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items:center;
+}
+
+h2 {
+  margin-top: -1vmin;
+  margin-left: 1vmin;
+  font-family: 'Codystar', cursive;
+  font-size: 1.6em;
+  letter-spacing: 0.1em;
+  text-shadow: 0px 0px 10px white;
+  text-align: center;
+}
+
+.tagline {
+  text-align: justify;
+  width: 96%;
+  line-height: 1.2em;
+  vertical-align: middle;
+  font-size: 1em;
+}
+
+.clincher {
+  align-self: center;
+  text-align: center;
+  width: 70%;
+  line-height: 1.4em;
+  margin-top: 5px;
+  margin-bottom: 30px;
+}
+
+.focus {
+  color: indianred;
+  font-weight: bold;
+}
+
+.bubbletext {
+  color:#FFC587;
+  font-weight: bolder;
+  text-shadow:
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
 }

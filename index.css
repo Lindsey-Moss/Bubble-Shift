@@ -1,0 +1,156 @@
+body {
+  margin: 0 auto;
+  background-image: url(game-files/bg-sunset-bubbles.png);
+  background-size: stretch;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  font-family: 'Comfortaa', cursive;
+}
+
+main {
+  width: 60vw;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items:center;
+}
+
+div {
+  background: rgba(255,255,255,0.7);
+  padding: 30px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items:center;
+  border-radius: 10px;
+  box-shadow: 4px 4px 8px rgba(0,0,0,0.6);
+}
+
+h1 {
+  margin-left: 2.6vmin;
+  font-family: 'Codystar', cursive;
+  font-size: 3.3em;
+  letter-spacing: 0.5em;
+  text-shadow: 0px 0px 10px white;
+  text-align: center;
+}
+
+h2 {
+  margin-left: 2.6vmin;
+  font-family: 'Codystar', cursive;
+  font-size: 2em;
+  letter-spacing: 0.2em;
+  text-shadow: 0px 0px 10px white;
+  text-align: center;
+}
+
+p {
+  vertical-align: middle;
+}
+
+.tagline {
+  text-align: justify;
+  width: 96%;
+  line-height: 1.4em;
+}
+
+.clincher {
+  text-align: center;
+  width: 70%;
+  line-height: 1.4em;
+  margin-top: 5px;
+  margin-bottom: 30px;
+}
+
+.focus {
+  color: indianred;
+  font-weight: bold;
+}
+
+.bubble {
+  color:#FFC587;
+  font-weight: bolder;
+  text-shadow:
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+}
+
+.buttons {
+  background: none;
+  display: inline-block;
+  box-shadow: none;
+}
+
+button {
+  margin: 12px;
+  padding: 10px 16px;
+  font-size: 1.5em;
+  font-family: 'Codystar', sans-serif;
+  background: navy;
+  color: aliceblue;
+  border-radius: 12px;
+  border: none;
+  letter-spacing: 0.1em;
+}
+
+button:hover {
+  background: salmon;
+}
+
+button:active {
+  background: navajowhite;
+  color: navy;
+  font-weight: bold;
+  box-shadow: inset 0px 0px 6px steelblue;
+}
+
+summary {
+  text-align: left;
+  opacity: 0.6;
+  font-size: 0.7em;
+}
+
+.details {
+cursor: pointer;
+}
+
+details {
+  align-self: flex-start;
+  opacity: 0.8;
+}
+
+details>summary {
+  list-style-type: none;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+details>summary::before {
+  content: '◍ ';
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+details[open] > summary::before {
+  content: '◌ ';
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.quote {
+  margin: 12px 15% 20px 10%;
+  text-align: justify;
+  font-style: italic;
+  border-left: 3px solid steelblue;
+  padding-left: 16px;
+  font-size: 0.8em;
+  opacity: 0.9;
+  margin-bottom:2vh;
+  font-family: sans-serif;
+}

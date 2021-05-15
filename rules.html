@@ -5,57 +5,21 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="index.css">
   <link href="https://fonts.googleapis.com/css2?family=Codystar&family=Comfortaa&display=swap" rel="stylesheet">
-  <title>Bubble Shift 🗪</title>
+  <title>Bubble Shift — Rules</title>
 </head>
 
 <body>
-  <div id="jsyk"></div>
-  <aside>
-    <a href="javascript:void(0)" class="closebtn" onclick="closeSide()">&times;</a>
-    <section class="bubble-list">
-      <div class="box verticalized">
-        <div class="bubble" id="five">5</div>
-        <div class="bubble" id="four">4</div>
-        <div class="bubble" id="three">3</div>
-        <div class="bubble" id="two">2</div>
-      </div>
-      <button class="rotate">Rotate ⇋</button>
-    </section>
-    <section class="playing">
-      <div class="option" id="opponent">Opponent Map</div>
-      <div class="option clicked" id="mine">My Board</div>
-      <div class="option" id="rules">Review Rules</div>
-    </section>
-    <section class="scoreboard">
-      <h5>You</h5>
-      <p class="scorekeep">Hits: <span class="score" id="hits"></span></p>
-      <p class="scorekeep">Misses: <span class="score" id="misses"></span></p>
-      <hr />
-      <h5>Computer</h5>
-      <p class="scorekeep">Hits: <span class="score" id="npcHits"></span></p>
-      <p class="scorekeep">Misses: <span class="score" id="npcMisses"></span></p>
-    </section>
-  </aside>
 
   <main>
-    <span class="openbtn" onclick="openSide()">&#9776;</span>
-    <section class="playerboard visible"></section>
-    <section class="npcboard invisible"></section>
-
-  </main>
-
-
-  <section class='rules-doc invisible'>
-    <div id="ruleslist">
+    <div>
       <h2>Rules of the Game</h2>
       <p class='tagline'>
         It really is like the classic game of Battleship: a turn-based, two-player, strategy-<i>like</i> (but mostly
         chance) guessing game.
       </p>
-      <p class="tagline">Before the game begins, you'll place your <span class='bubbletext'>bubbles</span> of each size
-        (5,
+      <p class="tagline">Before the game begins, you'll place your <span class='bubble'>bubbles</span> of each size (5,
         4, 3, and 2) on
         <span class="focus">your board</span>. You can rotate them vertically or horizontally and place them however you
         like— so long as they
@@ -78,11 +42,14 @@
         spot twice. ;) Whew!</p>
       <p class="clincher">Whoever pops all— 14, total!— of their opponent's bubbles first, wins!</p>
 
+      <a href="game.html"><button>Play</button></a>
+
 
     </div>
-  </section>
+  </main>
 
-  <script src="app.js"></script>
+
+
 </body>
 
 </html>
