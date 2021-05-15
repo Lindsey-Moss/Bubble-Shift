@@ -404,6 +404,7 @@ function closeSide() {
   bubbleCont.style.opacity = 0;
   bubbleCont2.style.opacity = 0;
   playingMenu.style.opacity = 0;
+  scoreboard.style.opacity = 0;
 }
 
 function openSide() {
@@ -412,6 +413,7 @@ function openSide() {
   bubbleCont.style.opacity = 1;
   bubbleCont2.style.opacity = 1;
   playingMenu.style.opacity = 1;
+  scoreboard.style.opacity = 1;
 }
 
 function checkAvailable() {
@@ -490,28 +492,28 @@ function checkAvailable() {
   switch (bubbleSize) {
     case 5:
       if (placed5 === true) {
-        activeCells.forEach((cell) => {
+        boardCells.forEach((cell) => {
           cell.classList.remove('active')
         })
       }
       break;
     case 4:
       if (placed4 === true) {
-        activeCells.forEach((cell) => {
+        boardCells.forEach((cell) => {
           cell.classList.remove('active')
         })
       }
       break;
     case 3:
       if (placed3 === true) {
-        activeCells.forEach((cell) => {
+        boardCells.forEach((cell) => {
           cell.classList.remove('active')
         })
       }
       break;
     case 2:
       if (placed2 === true) {
-        activeCells.forEach((cell) => {
+        boardCells.forEach((cell) => {
           cell.classList.remove('active')
         })
       }

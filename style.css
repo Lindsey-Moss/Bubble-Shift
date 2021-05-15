@@ -44,12 +44,12 @@ body {
   top: 0;
   font-family: 'Comfortaa', cursive;
   background-image: url(game-files/bg-watercolor.png);
-  background-size: stretch;
+  background-size:contain;
   padding: 30px;
   color: aliceblue;
   font-size: 2em;
   font-weight: bold;
-  text-shadow: 0 0 16px black;
+  text-shadow: 0 0 16px #528B8B;
   text-align: center;
   border-radius: 0%;
 }
@@ -218,6 +218,7 @@ h5 {
 }
 
 .scorekeep {
+  margin-left:6px;
   line-height: 1em;
   font-size: 0.8em;
   color: whitesmoke;
@@ -227,14 +228,15 @@ h5 {
 
 hr {
   border-color: rgba(255,255,255,0.3);
-  margin: 25px 5px;
+  margin: 25px 0px;
 }
 
 .score {
   float: right;
   margin-right: 22px;
   line-height: 1em;
-  font-size: 1em;
+  font-size: 1.2em;
+  vertical-align: middle;
   color: lightcyan;
   font-family: 'Codystar', cursive;
   font-weight: bold;
@@ -305,6 +307,7 @@ THE GAME BOARDS
 
 .taken {
   background: gray;
+  border: none;
   border-radius: 50%;
   color: white;
   cursor: default;
@@ -314,6 +317,7 @@ THE GAME BOARDS
 .npcboard {
   padding: 10px;
   margin-left: 14vmin;
+  margin-top: 2vmin;
   grid-template-columns: repeat(11,7vmin);
   grid-template-rows: repeat(11,7vmin);
   gap: 2px;
