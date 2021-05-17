@@ -124,6 +124,10 @@ aside {
   background: rgba(255,255,255,0.3);
 }
 
+.bubble {
+  display: flex;
+}
+
 .verticalized {
   flex-flow: row wrap;
 }
@@ -135,15 +139,19 @@ aside {
 .bubble {
   border: 1px solid black;
   margin: 1px;
-  background: yellow;
   padding: 5px;
   text-align: center;
   cursor: pointer;
-  border-radius: 50%;
+  border:none;
 }
 
-.bubble:active {
-  background: navajowhite;
+.lilbub {
+  z-index: -1;
+  background: yellow;
+  height: 1em;
+  width: 1em;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .rotate {

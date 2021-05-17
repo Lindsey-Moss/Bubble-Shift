@@ -61,4 +61,4 @@ Some aspects of depression and anxiety occur when someone's experienced, or even
 
 All backgrounds are free-to-use, unlicensed images.
 
-Fonts: [Google Fonts "Codystar" and "Comfortaa"](https://fonts.google.com/)
+**Fonts:** ["Codystar" and "Comfortaa" from Google Fonts](https://fonts.google.com/)

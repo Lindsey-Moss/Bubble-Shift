@@ -25,11 +25,8 @@ const theRules = document.querySelector('.rules-doc')
 
 let bubbleSize = 0;
 let assume = 'vertical'
-bubbleCont.classList.add('verticalized')
 bubbleList.forEach((bubble) => {
-  bubble.style.height = `${bubble.innerText}em`
-  bubble.style.lineHeight = `${bubble.innerText}em`
-  bubble.style.width = `1em`
+  bubble.classList.add('horizontalized')
 })
 
 let placed5 = false;
@@ -111,8 +108,7 @@ function buildNPC() {
     npcChoices.push(i)
   }
 
-  // //random placement of npc's bubbles
-
+  ////random placement of npc's bubbles
   //bubble size
   let npcBub = 5;
   let direction
@@ -715,9 +711,8 @@ function rotateFunc() {
     bubbleCont.classList.remove('horizontalized')
     bubbleCont.classList.add('verticalized')
     bubbleList.forEach((bubble) => {
-      bubble.style.height = `${bubble.innerText}em`
-      bubble.style.lineHeight = `${bubble.innerText}em`
-      bubble.style.width = `1em`
+      bubble.classList.remove('verticalized')
+      bubble.classList.add('horizontalized')
     })
     boardCells.forEach((cell) => {
       cell.classList.remove('available')
@@ -729,9 +724,8 @@ function rotateFunc() {
     bubbleCont.classList.remove('verticalized')
     bubbleCont.classList.add('horizontalized')
     bubbleList.forEach((bubble) => {
-      bubble.style.width = `${bubble.innerText}em`
-      bubble.style.height = `1em`
-      bubble.style.lineHeight = `1em`
+      bubble.classList.remove('horizontalized')
+      bubble.classList.add('verticalized')
     })
     boardCells.forEach((cell) => {
       cell.classList.remove('available')
@@ -989,7 +983,8 @@ function switchTurn() {
 
 bubbleList.forEach((bubble) => {
   bubble.addEventListener('click', function (e) {
-    bubbleSize = parseInt(e.target.innerText);
+    bubbleSize = parseInt(e.target.id);
+    console.log(e.target.id)
     switch (bubbleSize) {
       case 5:
         if (placed5 === true) {
