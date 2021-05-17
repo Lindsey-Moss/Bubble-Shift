@@ -4,7 +4,7 @@
 ### By: Lindsey "Zee" Moss
 
 
-#### [GitHub](https://github.com/Lindsey-Moss/) | [LinkedIn](https://www.linkedin.com/in/lindsey-moss-a0571620b/) | 
+#### [GitHub](https://github.com/Lindsey-Moss/) | [LinkedIn](https://www.linkedin.com/in/lindsey-moss-a0571620b/)
 ***
 ### ***Description***
 ##### A "Battleship" redux as a browser game. Instead of "maritime war simulation, for kids!", the intention is "competitive positivity." 
