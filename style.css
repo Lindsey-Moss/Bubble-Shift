@@ -9,6 +9,8 @@ body {
 }
 
 #jsyk {
+  opacity: 1;
+  transition: opacity 0.5s;
   width: 100vw;
   transform: translateX(-15vw);
   border: none;
@@ -137,12 +139,16 @@ aside {
 }
 
 .bubble {
-  border: 1px solid black;
   margin: 1px;
   padding: 5px;
   text-align: center;
   cursor: pointer;
-  border:none;
+}
+
+.bubble:active {
+  margin: 0px;
+  border-radius: 50%;
+  border: 1px dotted white;
 }
 
 .lilbub {
@@ -270,7 +276,7 @@ THE GAME BOARDS
 .playerboard {
   padding: 10px;
   margin-top: 2vmin;
-  margin-left: 14vmin;
+  margin-left: 15vmin;
   grid-template-columns: repeat(11,7vmin);
   grid-template-rows: repeat(11,7vmin);
   gap: 2px;
@@ -324,7 +330,7 @@ THE GAME BOARDS
 
 .npcboard {
   padding: 10px;
-  margin-left: 14vmin;
+  margin-left: 15vmin;
   margin-top: 2vmin;
   grid-template-columns: repeat(11,7vmin);
   grid-template-rows: repeat(11,7vmin);

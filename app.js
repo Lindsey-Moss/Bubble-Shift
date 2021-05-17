@@ -25,18 +25,15 @@ const theRules = document.querySelector('.rules-doc')
 
 let bubbleSize = 0;
 let assume = 'vertical'
-bubbleList.forEach((bubble) => {
-  bubble.classList.add('horizontalized')
-})
 
 let placed5 = false;
 let placed4 = false;
 let placed3 = false;
 let placed2 = false;
 
-gameActive = false;
+let gameActive = false;
 
-turnIs = 'player';
+let turnIs = 'player';
 
 let playerHits = 0;
 let playerMisses = 0;
@@ -46,6 +43,8 @@ let npcHits = 0;
 let npcMisses = 0;
 const showNPCHits = document.querySelector('#npcHits')
 const showNPCMisses = document.querySelector('#npcMisses')
+
+let wait = false;
 
 /////////////////////////////////////
 //// BOARD BUILD
@@ -107,10 +106,8 @@ function buildNPC() {
   for (i = 0; i <= 99; i++) {
     npcChoices.push(i)
   }
-
   ////random placement of npc's bubbles
-  //bubble size
-  let npcBub = 5;
+  let npcBub = 5;  //=> bubble size
   let direction
   function setDirection() {
     direction = Math.floor(Math.random() * 2) //=> 0 is horiz, 1 is vert
@@ -351,19 +348,12 @@ function buildNPC() {
   }
 }
 
-
-
-
-
 //// GAME MESSAGES
 
 const preGame = document.createElement('span')
 preGame.innerText = `Place all your bubbles where you'd like them. :)`
 if (gameActive === false) {
-  jsyk.setAttribute('class', 'gentle')
   jsyk.appendChild(preGame)
-  jsyk.style.opacity = '1'
-  jsyk.style.transition = 'opacity 0.5s'
 } else { }
 
 const gameStart = document.createElement('button')
@@ -533,37 +523,6 @@ function checkAvailable() {
       cell.classList.remove('available')
     }
   })
-  // switch (bubbleSize) {
-  //   case 5:
-  //     if (placed5 === true) {
-  //       boardCells.forEach((cell) => {
-  //         cell.classList.remove('active')
-  //       })
-  //     }
-  //     break;
-  //   case 4:
-  //     if (placed4 === true) {
-  //       boardCells.forEach((cell) => {
-  //         cell.classList.remove('active')
-  //       })
-  //     }
-  //     break;
-  //   case 3:
-  //     if (placed3 === true) {
-  //       boardCells.forEach((cell) => {
-  //         cell.classList.remove('active')
-  //       })
-  //     }
-  //     break;
-  //   case 2:
-  //     if (placed2 === true) {
-  //       boardCells.forEach((cell) => {
-  //         cell.classList.remove('active')
-  //       })
-  //     }
-  //     break;
-  //   default:
-  // }
 }
 
 function hoverCell(e) {
@@ -601,9 +560,9 @@ function hoverCell(e) {
         activeCell.classList.add('active')
         activeCell.nextSibling.classList.add('active')
         if ((activeCell.classList.contains('taken')) || (activeCell.nextSibling.classList.contains('taken'))) {
-          for (i = 0; i < boardCells.length; i++) {
-            boardCells[i].classList.remove('active');
-          }
+          boardCells.forEach((cell) => {
+            cell.classList.remove('active');
+          })
           jsyk.setAttribute('class', 'alert')
           jsyk.innerText = `You can't overlap bubbles!`
           jsyk.style.opacity = '1'
@@ -684,9 +643,9 @@ function hoverCell(e) {
               jsyk.style.opacity = '0';
           }
         } else {
-          for (i = 0; i < boardCells.length; i++) {
-            boardCells[i].classList.remove('active');
-          }
+          boardCells.forEach((cell) => {
+            cell.classList.remove('active');
+          })
           jsyk.setAttribute('class', 'alert')
           jsyk.innerText = `You can't overlap bubbles!`
           jsyk.style.opacity = '1'
@@ -699,9 +658,9 @@ function hoverCell(e) {
 }
 
 function idleCell() {
-  for (i = 0; i < boardCells.length; i++) {
-    boardCells[i].classList.remove('active');
-  }
+  boardCells.forEach((cell) => {
+    cell.classList.remove('active');
+  })
 }
 
 function rotateFunc() {
@@ -869,7 +828,7 @@ function seeRules() {
 }
 
 function gameHoverCell(e) {
-  if (turnIs === 'player') {
+  if (turnIs === 'player' && wait === false) {
     activeCell = e.target
     activeCell.classList.add('active')
   } else { }
@@ -884,15 +843,17 @@ function gameIdleCell() {
 }
 
 function setGuess() {
-  if (turnIs === 'player') {
+  if (turnIs === 'player' && wait === false) {
     activeCell = document.querySelector('.active')
     if (activeCell.classList.contains('secret') && !activeCell.classList.contains('hit')) {
       activeCell.classList.add('hit')
+      wait = true;
       playerHits++
       showHits.innerText = `${playerHits}`
       checkWin()
     } else if (!activeCell.classList.contains('secret') && !activeCell.classList.contains('miss')) {
       activeCell.classList.add('miss')
+      wait = true;
       jsyk.innerHTML = ''
       jsyk.style.opacity = '1'
       jsyk.appendChild(missMsg)
@@ -919,7 +880,7 @@ function checkWin() {
     jsyk.innerHTML = ''
     jsyk.style.opacity = '1'
     jsyk.setAttribute('id', 'endscreen')
-    jsyk.innerHTML = `The computer wins! Now wasn't that fun? :)`
+    jsyk.innerHTML = `The computer won this time. Now wasn't that fun? :)`
     npcBoardCells.forEach((cell) => {
       cell.removeEventListener('mouseover', gameHoverCell);
       cell.removeEventListener('mouseout', gameIdleCell);
@@ -958,7 +919,8 @@ function npcTurn() {
 
 function switchTurn() {
   if (turnIs === 'player') {
-    turnIs = 'npc'
+    turnIs = 'npc';
+    wait = true;
     jsyk.innerHTML = ''
     jsyk.style.opacity = '1'
     jsyk.setAttribute('class', 'alert')
@@ -966,7 +928,8 @@ function switchTurn() {
     backToMyBoard()
     setTimeout(npcTurn, 2500)
   } else if (turnIs === 'npc') {
-    turnIs = 'player'
+    turnIs = 'player';
+    wait = false;
     jsyk.innerHTML = ''
     jsyk.setAttribute('class', 'gentle')
     jsyk.style.opacity = '1'
@@ -984,7 +947,6 @@ function switchTurn() {
 bubbleList.forEach((bubble) => {
   bubble.addEventListener('click', function (e) {
     bubbleSize = parseInt(e.target.id);
-    console.log(e.target.id)
     switch (bubbleSize) {
       case 5:
         if (placed5 === true) {
@@ -1050,7 +1012,6 @@ gameStart.addEventListener('click', () => {
   buildNPC()
   bubbleCont.style.display = 'none';
   bubbleCont2.style.display = 'none';
-  scoreboard.style.opacity = 1;
   jsyk.style.opacity = '0';
   jsyk.removeChild(readyMsg)
   jsyk.style.opacity = '1'
