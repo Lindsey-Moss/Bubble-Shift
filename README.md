@@ -28,7 +28,7 @@ Some aspects of depression and anxiety occur when someone's experienced, or even
 ### ***Getting Started***
 ##### To get started, simply load the URL, and click "Play" to begin a new game.
 ##### A Trello board was used to track the progress of this application and can be viewed [here](https://trello.com/b/eH7vyNCh/bubble-shift-a-battleship-redux).
-##### The project has been deployed and can be viewed [here]([#](https://bubbleshift.surge.sh/)).
+##### The project has been deployed and can be viewed [here](https://bubbleshift.surge.sh/).
 ***
 
 ### ***Screenshots***
