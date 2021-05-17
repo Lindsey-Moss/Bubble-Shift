@@ -26,33 +26,39 @@ Some aspects of depression and anxiety occur when someone's experienced, or even
 ***
 
 ### ***Getting Started***
-##### To get started, create a new user and sign in.
+##### To get started, simply load the URL, and click "Play" to begin a new game.
 ##### A Trello board was used to track the progress of this application and can be viewed [here](https://trello.com/b/eH7vyNCh/bubble-shift-a-battleship-redux).
-##### The project has been deployed and can be viewed [here](#).
+##### The project has been deployed and can be viewed [here]([#](https://bubbleshift.surge.sh/)).
 ***
 
 ### ***Screenshots***
 
-TBA
-<!-- ##### Image 1 Header
-![Image1](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F1d%2Fe1%2F94%2F1de19422ac82ef0fcda348040902be59.jpg&f=1&nofb=1)
+##### Game Landing Page
+![Game Index, Landing Page](https://trello-attachments.s3.amazonaws.com/609f5308fce8bc0e0f329ec7/960x939/f094b71cec8de5bbe930fd8fd072c6ed/image.png)
 
-##### Image 2 Header
-![Image2](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.elitereaders.com%2Fwp-content%2Fuploads%2F2017%2F11%2FAdorable-Snakes-15.jpg&f=1&nofb=1)
+##### Mid-Game View
+![Mid-game, player has made 5 misses and is highlighting their next move](https://trello-attachments.s3.amazonaws.com/609f53c14a6a9769b476c809/958x938/893e93685065d53f20d6e963dca2bb99/image.png)
 
-##### Image 3 Header
-![Image3](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fcf%2F5d%2F2c%2Fcf5d2c892b99c29bb71dac7e252e5b5f.jpg&f=1&nofb=1) -->
+##### Reviewing the Rules During a Game
+![Rules review from the pop-up menu](https://trello-attachments.s3.amazonaws.com/609f53e1d8e01a5314b76fab/958x936/30a8759170702a0332d5d26e9c8db58d/image.png) 
 ***
 
 ### ***Future Updates***
-- [ ] TBD
-<!-- - [x] ~~Completed Update~~ -->
+- [x] ~~Review rules during game~~
+- [ ] Replay button on win/loss
+- [ ] Track wins/losses through replays
+- [ ] Randomize option for auto-placing the player's bubbles in pre-game.
+- [ ] Improve computer player's logic ("chain on" after successful hits, and then return to random firing)
+- [ ] Drag and drop for bubbles instead of point-and-click-and-click.
+- [ ] Add the intended catharsis elements: Instead of just circular "bubbles", they are actual thought or speech bubble images, representing negative thoughts, experiences or concepts. Popping the bubbles then represents (and the game reaffirms) that that is false or etc. (Due to the limitations of Surge deployment, this was untenable at this time.)
+- [ ] With the above inclusion of bubble images, I would like there to be a "stock" of pre-generated labels the player can choose from for their bubbles if they don't want to open up about their own bothers with a user input function.
+- [ ] Actual two-player funcionality.
+- [ ] Optional side-by-side view of player's and opponent's maps.
+- [ ] Mutliple background/color scheme options.
 ***
 
 ### ***Credits***
 
-TBA
+All backgrounds are free-to-use, unlicensed images.
 
-<!-- Style Inspiration Credit: [Wargames (1983)](https://www.imdb.com/title/tt0086567/)
-
-Fonts: [Google Fonts "VT323" and "Montserrat"](https://fonts.google.com/) -->
+Fonts: [Google Fonts "Codystar" and "Comfortaa"](https://fonts.google.com/)
