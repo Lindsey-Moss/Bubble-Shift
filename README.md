@@ -47,6 +47,7 @@ Some aspects of depression and anxiety occur when someone's experienced, or even
 - [x] ~~Review rules during game~~
 - [ ] Replay button on win/loss
 - [ ] Track wins/losses through replays
+- [ ] Notification when a bubble is popped "all the way" (i.e. like when a ship is sunk in og Battleship).
 - [ ] Randomize option for auto-placing the player's bubbles in pre-game.
 - [ ] Improve computer player's logic ("chain on" after successful hits, and then return to random firing)
 - [ ] Drag and drop for bubbles instead of point-and-click-and-click.
